@@ -1,0 +1,1206 @@
+/* =========================================
+   VARIABLES & SETUP
+========================================= */
+:root {
+    /* Colors */
+    --color-green-light: #CBE896;
+    --color-green-dark: #82A740;
+    --color-blue-river: #A0C4E2;
+    --color-blue-dark: #4A90E2;
+    --color-yellow: #F9D423;
+    --color-text-main: #2C3E50;
+    --color-text-muted: #596E82;
+    --color-bg-white: #FFFFFF;
+
+    /* Typography */
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Quicksand', sans-serif;
+
+    /* Layout */
+    --meander-width: 1000px;
+    --header-height: 80px;
+    --border-radius-sm: 8px;
+    --border-radius-lg: 24px;
+    --transition-fast: 0.2s ease;
+    --transition-slow: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* Shadows */
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    line-height: 1.6;
+    background-color: #DCECB9;
+    /* Extra kleurrijke, speelse schets strepen in het groene vlak als achtergrond */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Cpath d='M50,150 Q100,100 150,180 T250,120' fill='none' stroke='%23F9D423' stroke-width='6' stroke-linecap='round' opacity='0.7'/%3E%3Cpath d='M600,650 Q650,600 700,620 T780,580' fill='none' stroke='%23FF6B6B' stroke-width='5' stroke-linecap='round' opacity='0.6'/%3E%3Ccircle cx='400' cy='200' r='10' fill='%234A90E2' opacity='0.6'/%3E%3Cpath d='M100,600 Q150,550 180,600 T260,570' fill='none' stroke='%234A90E2' stroke-width='8' stroke-linecap='round' opacity='0.5'/%3E%3Ccircle cx='180' cy='720' r='8' fill='%2382A740' opacity='0.7'/%3E%3Cpath d='M650,180 Q690,130 750,160' fill='none' stroke='%23F9D423' stroke-width='7' stroke-linecap='round' opacity='0.6'/%3E%3Ccircle cx='700' cy='300' r='12' fill='%23FF6B6B' opacity='0.5'/%3E%3Cpath d='M300,50 Q320,80 340,60 T380,90' fill='none' stroke='%2382A740' stroke-width='5' stroke-linecap='round' opacity='0.6'/%3E%3Cpath d='M50,400 Q80,380 120,420 T180,390' fill='none' stroke='%23FF6B6B' stroke-width='4' stroke-linecap='round' opacity='0.6'/%3E%3C/svg%3E");
+    background-size: 800px 800px;
+    background-repeat: repeat;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--color-green-dark);
+}
+
+p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+strong {
+    font-weight: 700;
+    color: var(--color-blue-dark);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-blue-dark);
+    transition: var(--transition-fast);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-3 {
+    margin-top: 2rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 2rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border: none;
+    text-align: center;
+    /* Strakke knoppen per verzoek */
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background-color: var(--color-green-dark);
+    color: white;
+    box-shadow: 0 4px 15px rgba(130, 167, 64, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #6d8e35;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(130, 167, 64, 0.4);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--color-yellow);
+    color: var(--color-text-main);
+    box-shadow: 0 4px 15px rgba(249, 212, 35, 0.3);
+}
+
+.btn-secondary:hover {
+    background-color: #e5c320;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(249, 212, 35, 0.4);
+}
+
+/* =========================================
+   HEADER & NAVIGATION
+========================================= */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    transition: var(--transition-fast);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 100px;
+    /* Groot en prominent *************************/
+    width: auto;
+    display: block;
+}
+
+.main-nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.main-nav a {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text-main);
+    position: relative;
+}
+
+.main-nav a:hover {
+    color: var(--color-green-dark);
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-green-dark);
+    transition: var(--transition-fast);
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+.nav-cta {
+    background-color: var(--color-blue-dark);
+    color: white !important;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+}
+
+.nav-cta::after {
+    display: none;
+}
+
+.nav-cta:hover {
+    background-color: #3a7bc2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-text-main);
+    cursor: pointer;
+}
+
+/* =========================================
+   MEANDER EFFECT STRUCTURE
+   The core visual concept: A flowing white river in the center
+========================================= */
+.meander-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: transparent;
+    position: relative;
+    box-shadow: none;
+    z-index: 1;
+    min-height: 100vh;
+}
+
+.river-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-bg-white);
+    z-index: -1;
+}
+
+.river-bg::before,
+.river-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    background-size: 200px 1200px;
+    background-repeat: repeat-y;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.river-bg::before {
+    left: -1px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' width='200' height='1200' viewBox='0 0 200 1200'%3E%3Cpath d='M 100,0 C 233.33,150 233.33,450 100,600 C -33.33,750 -33.33,1050 100,1200 L 0,1200 L 0,0 Z' fill='%23DCECB9'/%3E%3Cpath d='M 105,-5 C 250,135 210,480 85,610 C -50,720 -15,1080 110,1205' fill='none' stroke='%234A90E2' stroke-width='4' opacity='0.7' stroke-linecap='round'/%3E%3Cpath d='M 90,-5 C 210,170 260,420 120,590 C -5,780 -60,1020 90,1205' fill='none' stroke='%234A90E2' stroke-width='2' opacity='0.9' stroke-linecap='round'/%3E%3Cpath d='M 98,-5 C 238,155 228,455 98,605 C -38,745 -28,1055 102,1205' fill='none' stroke='%234A90E2' stroke-width='2' opacity='0.8' stroke-linecap='round'/%3E%3Cpath d='M 102,-5 C 228,145 238,445 102,595 C -28,755 -38,1045 98,1205' fill='none' stroke='%234A90E2' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.river-bg::after {
+    right: -1px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' width='200' height='1200' viewBox='0 0 200 1200'%3E%3Cpath d='M 100,0 C 233.33,150 233.33,450 100,600 C -33.33,750 -33.33,1050 100,1200 L 200,1200 L 200,0 Z' fill='%23DCECB9'/%3E%3Cpath d='M 105,-5 C 250,135 210,480 85,610 C -50,720 -15,1080 110,1205' fill='none' stroke='%234A90E2' stroke-width='4' opacity='0.7' stroke-linecap='round'/%3E%3Cpath d='M 90,-5 C 210,170 260,420 120,590 C -5,780 -60,1020 90,1205' fill='none' stroke='%234A90E2' stroke-width='2' opacity='0.9' stroke-linecap='round'/%3E%3Cpath d='M 98,-5 C 238,155 228,455 98,605 C -38,745 -28,1055 102,1205' fill='none' stroke='%234A90E2' stroke-width='2' opacity='0.8' stroke-linecap='round'/%3E%3Cpath d='M 102,-5 C 228,145 238,445 102,595 C -28,755 -38,1045 98,1205' fill='none' stroke='%234A90E2' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Make SVG borders responsive so they don't cover text on small screens */
+@media (max-width: 1024px) {
+
+    .river-bg::before,
+    .river-bg::after {
+        width: 100px;
+        background-size: 100px 1200px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .river-bg::before,
+    .river-bg::after {
+        width: 35px;
+        background-size: 35px 1200px;
+    }
+}
+
+/* Scattered Trees */
+.scatter-tree {
+    position: absolute;
+    z-index: 5;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.tree-1 {
+    top: 8%;
+    left: -80px;
+    width: 150px;
+    transform: rotate(-5deg);
+}
+
+.tree-2 {
+    top: 25%;
+    right: -120px;
+    width: 180px;
+    transform: rotate(5deg);
+}
+
+.tree-3 {
+    top: 55%;
+    left: -60px;
+    width: 140px;
+    transform: scaleX(-1);
+}
+
+.tree-4 {
+    top: 75%;
+    right: -90px;
+    width: 160px;
+    transform: rotate(-2deg);
+}
+
+.tree-5 {
+    top: 90%;
+    left: -110px;
+}
+
+.scatter-element {
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.95;
+    filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.1));
+}
+
+.content-layer {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.meander-content {
+    max-width: 580px;
+    /* smal genoeg om ALTIJD in het witte vlak te passen */
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+    z-index: 10;
+}
+
+
+/* Containers in the middle safely inside the white SVG wave */
+#visie .meander-content,
+#community .meander-content,
+#blog .meander-content,
+#wonen-zorg .meander-content,
+#vrienden .meander-content {
+    margin: 0 auto;
+}
+
+/* Safe meandering text effect inside specific blocks */
+#visie .meander-content>p,
+#wonen-zorg .meander-content .care-text>p {
+    transition: margin 0.5s ease-in-out;
+}
+
+#visie .meander-content>p:nth-of-type(1),
+#wonen-zorg .meander-content .care-text>p:nth-of-type(1) {
+    margin-right: 15%;
+    margin-left: 0;
+}
+
+#visie .meander-content>p:nth-of-type(2),
+#wonen-zorg .meander-content .care-text>p:nth-of-type(2) {
+    margin-left: 10%;
+    margin-right: 5%;
+}
+
+#visie .meander-content>p:nth-of-type(3),
+#wonen-zorg .meander-content .care-text>p:nth-of-type(3) {
+    margin-left: 15%;
+    margin-right: 0;
+}
+
+.sketchy-divider {
+    border: 0;
+    height: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='8' viewBox='0 0 100 8'%3E%3Cpath d='M0,4 Q25,0 50,4 T100,4' fill='none' stroke='%23A0C4E2' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    margin: 2rem auto;
+    width: 60%;
+    opacity: 0.8;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+.hero {
+    position: relative;
+    width: 100%;
+    padding-top: var(--header-height);
+    /* pushes below sticky header */
+}
+
+.hero-image-container {
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    position: relative;
+}
+
+.hero-logo-wrapper {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 30vw;
+    /* Schaalbaar t.o.v. schermbreedte */
+    min-width: 250px;
+    max-width: 320px;
+    z-index: 30;
+    padding: 15px 25px;
+    /* Kleine, vaste marge rondom het logo */
+    background-color: transparent;
+
+    /* Wavy sketchy borders rondom het volledige gebied qua schaalbare SVG */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cpath d='M 200,5 C 340,5 395,60 395,150 C 395,240 340,295 200,295 C 60,295 5,240 5,150 C 5,60 60,5 200,5 Z' fill='%23FFFFFF'/%3E%3Cpath d='M 200,10 C 320,15 385,50 390,150 C 395,250 310,285 200,290 C 90,295 15,240 10,150 C 5,60 80,5 200,10 Z' fill='none' stroke='%234A90E2' stroke-width='4' opacity='0.7' stroke-linecap='round'/%3E%3Cpath d='M 200,15 C 310,5 380,60 380,150 C 380,240 300,280 200,285 C 100,290 20,250 20,150 C 20,50 90,25 200,15 Z' fill='none' stroke='%234A90E2' stroke-width='2' opacity='0.9' stroke-linecap='round'/%3E%3Cpath d='M 200,5 C 330,10 395,60 395,150 C 395,240 320,295 200,295 C 80,295 5,230 5,150 C 5,70 70,-5 200,5 Z' fill='none' stroke='%234A90E2' stroke-width='3' opacity='0.8' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-logo-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.hero-logo {
+    width: 95%;
+    /* Vult vrijwel het hele overgebleven gebied na de lichte padding */
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .hero-logo-wrapper {
+        top: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        width: 80vw;
+        max-width: 250px;
+        padding: 10px 15px;
+    }
+
+    .hero-logo-wrapper:hover {
+        transform: translateX(50%) scale(1.02);
+    }
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    /* Focus on house */
+}
+
+.hero-content {
+    margin-top: -50px;
+    /* Pull content up over the image slightly less */
+    background-color: transparent;
+    /* Give hero content a solid white box that starts the meander */
+    border-radius: 40px 40px 0 0;
+    /* Smooth rounded top */
+    text-align: center;
+    padding: 3rem 4rem;
+    /* Reduced top padding to not increase total height */
+    box-shadow: none;
+    z-index: 20;
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+}
+
+
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero .subtitle {
+    font-size: 1.5rem;
+    color: var(--color-blue-dark);
+    margin-bottom: 2.5rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* =========================================
+   PHILOSOPHY & ILLUSTRATION
+========================================= */
+.split-layout {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.text-col {
+    flex: 1;
+}
+
+.image-col {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+}
+
+.illustration {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+.sustainability-icons {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.icon-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(203, 232, 150, 0.3);
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    flex: 1;
+    text-align: center;
+    border: 1px solid rgba(130, 167, 64, 0.2);
+    /* Strakke uitlijning per verzoek */
+}
+
+.icon-box i {
+    font-size: 2rem;
+    color: var(--color-green-dark);
+}
+
+.icon-box span {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   WONEN & ZORG
+========================================= */
+.living-care h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.care-content {
+    font-size: 1.2rem;
+}
+
+.transparency-box {
+    background-color: #f8fbff;
+    border-left: 4px solid var(--color-blue-river);
+    padding: 2rem;
+    margin: 2.5rem 0;
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+}
+
+.transparency-box h3 {
+    margin-bottom: 0.5rem;
+    color: var(--color-blue-dark);
+}
+
+.transparency-box p {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.highlight-box {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: linear-gradient(135deg, var(--color-green-light), #e0f0b4);
+    padding: 1.5rem 2rem;
+    border-radius: var(--border-radius-lg);
+    margin-top: 2rem;
+    color: var(--color-green-dark);
+}
+
+.highlight-box i {
+    font-size: 2.5rem;
+}
+
+.highlight-box p {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* =========================================
+   COMMUNITY GRID (Outside meander)
+========================================= */
+.community-grid-section {
+    padding: 6rem 0;
+    position: relative;
+    z-index: 20;
+    /* Outside meander, transparent bg so wood texture shows */
+}
+
+.community-grid-section .section-title {
+    color: var(--color-text-main);
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    /* Strakke blokken per verzoek */
+}
+
+.glass-card {
+    background: #F4F9F1;
+    backdrop-filter: blur(10px);
+    border: 3px solid var(--color-blue-dark);
+    padding: 3rem 2rem;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    text-align: center;
+    transition: var(--transition-slow);
+    box-shadow: 4px 4px 0px rgba(74, 144, 226, 0.15);
+}
+
+.glass-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 6px 6px 0px rgba(74, 144, 226, 0.3);
+    background: #FAFCF7;
+}
+
+.card-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-blue-river);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1.5rem auto;
+}
+
+.glass-card:nth-child(2) .card-icon {
+    background-color: var(--color-yellow);
+    color: var(--color-text-main);
+}
+
+.glass-card:nth-child(3) .card-icon {
+    background-color: var(--color-green-dark);
+}
+
+/* =========================================
+   VRIENDEN VAN (Donations)
+========================================= */
+.friends-section {
+    padding: 4rem 0;
+    position: relative;
+    z-index: 20;
+}
+
+.friends-banner {
+    background-color: var(--color-blue-dark);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    overflow: hidden;
+    box-shadow: var(--shadow-hover);
+}
+
+.friends-content {
+    flex: 1;
+    padding: 4rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.friends-content h2 {
+    color: white;
+    font-size: 2.5rem;
+}
+
+.warm-call {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-yellow);
+    margin-bottom: 1.5rem;
+}
+
+.friends-image {
+    flex: 0.6;
+    background-color: white;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.cropped-illustration {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    object-position: top;
+    /* Show top part of people */
+}
+
+/* =========================================
+   FAQ ACCORDION
+========================================= */
+.faq-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.faq-section>.meander-content>p {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
+
+.faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.faq-item {
+    background: #F4F9F1;
+    border: 3px solid var(--color-blue-dark);
+    border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+    /* Sketchy border */
+    overflow: hidden;
+    transition: var(--transition-fast);
+}
+
+.faq-item:hover {
+    background: #FAFCF7;
+    box-shadow: 4px 4px 0px rgba(74, 144, 226, 0.15);
+}
+
+.faq-item.active {
+    background: #EAF2E3;
+    border-color: var(--color-green-dark);
+    box-shadow: 6px 6px 0px rgba(130, 167, 64, 0.2);
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 1.5rem 2rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-text-main);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition-fast);
+}
+
+.faq-question i {
+    color: var(--color-green-dark);
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+    padding: 0 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    /* slight contrast */
+    border-top: 2px dashed rgba(130, 167, 64, 0.2);
+    /* Dashed line to fit sketchy vibe */
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 1.5rem 2rem;
+}
+
+.faq-answer p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* =========================================
+   BLOG
+========================================= */
+.blog-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+}
+
+.blog-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.strict-card {
+    background: #F4F9F1;
+    border: 3px solid var(--color-blue-dark);
+    padding: 2rem;
+    border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+    box-shadow: 4px 4px 0px rgba(74, 144, 226, 0.15);
+    transition: var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+}
+
+.strict-card:hover {
+    box-shadow: 6px 6px 0px rgba(74, 144, 226, 0.3);
+    border-color: var(--color-blue-dark);
+    background: #FAFCF7;
+}
+
+.strict-card.highlight {
+    background-color: #EAF2E3;
+    border: 4px solid var(--color-blue-river);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
+.blog-date {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.strict-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.strict-card p {
+    flex-grow: 1;
+    font-size: 1rem;
+}
+
+.read-more {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.read-more:hover {
+    gap: 0.8rem;
+}
+
+/* =========================================
+   FOOTER & CONTACT FORM
+========================================= */
+.main-footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 6rem 0 2rem 0;
+    position: relative;
+    z-index: 20;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.brand-col p {
+    color: #a0b2c6;
+}
+
+.footer-logo {
+    height: 70px;
+    filter: brightness(0) invert(1);
+    margin-bottom: 1.5rem;
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.contact-info i {
+    color: var(--color-green-light);
+    font-size: 1.2rem;
+}
+
+.form-col {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2.5rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.form-col h3 {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #a0b2c6;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 4px;
+    /* Strakke velden */
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-green-light);
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.form-group select option {
+    background-color: #2c3e50;
+    color: white;
+}
+
+.submit-btn {
+    width: 100%;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.form-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--color-green-dark);
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #a0b2c6;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes bounceSlow {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.bounce-on-scroll.visible {
+    animation: bounceSlow 4s ease-in-out infinite;
+}
+
+/* =========================================
+   MEDIA QUERIES (RESPONSIVENESS)
+========================================= */
+/* Hide scattered elements on screens where there is no space next to the meander */
+@media (max-width: 1200px) {
+
+    .scatter-tree,
+    .scatter-element {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .grid-layout {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        font-size: 2.8rem;
+    }
+
+    .split-layout {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .sustainability-icons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-nav {
+        display: none;
+    }
+
+    /* Hide for simple mobile */
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .friends-banner {
+        flex-direction: column;
+    }
+
+    .friends-image {
+        display: none;
+    }
+
+    /* Hide on mobile to save space */
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-content {
+        padding: 2rem;
+        margin-top: -50px;
+    }
+
+    .hero-overlay-text .hero-title-overlay {
+        font-size: 1.8rem;
+    }
+
+    .hero-overlay-text .hero-subtitle-overlay {
+        font-size: 1.1rem;
+    }
+
+    .meander-content {
+        padding: 3rem 45px;
+    }
+
+    #visie .meander-content>p,
+    #wonen-zorg .meander-content .care-text>p {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Make shape less wavy on mobile to save reading space */
+    .meander-shape {
+        clip-path: polygon(5% 0%, 95% 0%, 100% 20%, 95% 50%, 100% 80%, 95% 100%, 5% 100%, 0% 80%, 5% 50%, 0% 20%);
+    }
+}
+
+/* =========================================
+   SKETCHY FARM VIBE STYLES
+========================================= */
+.card,
+.glass-card,
+.strict-card,
+.btn,
+.icon-box,
+.transparency-box,
+.highlight-box,
+.hero-image-container,
+.hero-image,
+.friends-banner,
+.illustration {
+    border: 3px solid var(--color-blue-dark) !important;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
+}
+
+.glass-card,
+.strict-card,
+.card {
+    background: #F0F7E6 !important;
+    box-shadow: 4px 4px 0px var(--color-blue-dark) !important;
+    transform: rotate(-1deg);
+    transition: transform 0.2s ease;
+}
+
+.glass-card:hover,
+.strict-card:hover,
+.card:hover {
+    transform: rotate(1deg) translateY(-5px);
+}
+
+.icon-box,
+.highlight-box,
+.transparency-box {
+    box-shadow: 3px 3px 0px var(--color-blue-dark) !important;
+    transform: rotate(1deg);
+}
+
+.btn-primary {
+    background-color: var(--color-yellow) !important;
+    color: var(--color-text-main) !important;
+}
+
+.btn-secondary {
+    background-color: var(--color-green-light) !important;
+    color: var(--color-text-main) !important;
+}
+
+.btn {
+    box-shadow: 2px 2px 0px var(--color-blue-dark) !important;
+}
+
+/* Keep photo inside sketchy frame properly */
+.hero-image-container {
+    overflow: hidden;
+    margin: 2rem auto;
+    max-width: 90%;
+    transform: rotate(-0.5deg);
+}
