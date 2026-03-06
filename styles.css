@@ -1215,3 +1215,42 @@ a {
     max-width: 90%;
     transform: rotate(-0.5deg);
 }
+/* FINAL MOBILE OVERRIDES - Must be at the very bottom to win specificity/order */
+@media (max-width: 768px) {
+    .hero-image-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        transform: none !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9; /* Professional widescreen for full-width photo */
+    }
+
+    .hero-image {
+        border-radius: 0 !important;
+        border: none !important;
+        object-position: center center;
+    }
+
+    .hero-logo-wrapper {
+        top: 10px !important;
+        left: 10px !important;
+        right: auto !important;
+        transform: none !important;
+        width: 45vw !important;
+        max-width: 180px !important;
+        padding: 5px 10px !important;
+        filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)) !important;
+    }
+
+    .hero-content {
+        margin-top: 0 !important;
+        padding: 2rem 1.5rem !important;
+        background-color: var(--color-bg-white) !important;
+        border-radius: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
