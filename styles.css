@@ -429,15 +429,15 @@ a {
 
 .hero-logo-wrapper {
     position: absolute;
-    top: 50px;
+    top: 120px;
     right: 50px;
-    width: 30vw;
-    /* Schaalbaar t.o.v. schermbreedte */
-    min-width: 250px;
-    max-width: 320px;
+    width: 18vw;
+    /* Schaalbaar t.o.v. schermbreedte (40% verkleind) */
+    min-width: 150px;
+    max-width: 192px;
     z-index: 30;
-    padding: 15px 25px;
-    /* Kleine, vaste marge rondom het logo */
+    padding: 5px;
+    /* Kleine marge rondom het logo waardoor het vullend is */
     background-color: transparent;
 
     /* Wavy sketchy borders rondom het volledige gebied qua schaalbare SVG */
@@ -458,7 +458,7 @@ a {
 }
 
 .hero-logo {
-    width: 95%;
+    width: 100%;
     /* Vult vrijwel het hele overgebleven gebied na de lichte padding */
     height: auto;
     display: block;
@@ -467,13 +467,14 @@ a {
 
 @media (max-width: 768px) {
     .hero-logo-wrapper {
-        top: 15px;
+        top: 60px;
         left: 15px;
         right: auto;
         transform: none;
-        width: 50vw;
-        max-width: 200px;
-        padding: 8px 12px;
+        width: 120px;
+        height: 120px;
+        /* Forceert een ronde vorm voor de streperige SVG border */
+        padding: 5px;
     }
 
     .hero-logo-wrapper:hover {
