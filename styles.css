@@ -417,7 +417,7 @@ a {
 .hero {
     position: relative;
     width: 100%;
-    padding-top: var(--header-height);
+    padding-top: calc(var(--header-height) + 20px);
     /* pushes below sticky header */
 }
 
@@ -1129,6 +1129,10 @@ a {
         font-size: 2.2rem;
     }
 
+    .hero {
+        padding-top: 130px;
+    }
+
     .hero-image-container {
         height: auto;
         aspect-ratio: 16 / 9;
@@ -1136,7 +1140,7 @@ a {
         min-height: unset;
         max-width: 95%;
         /* Use more width on mobile */
-        margin: 2rem auto;
+        margin: 0 auto;
     }
 
     .hero-content {
@@ -1233,7 +1237,7 @@ a {
 /* FINAL MOBILE OVERRIDES - Must be at the very bottom to win specificity/order */
 @media (max-width: 768px) {
     .hero-logo-wrapper {
-        top: 0 !important;
+        top: -60px !important;
         right: 0 !important;
         left: auto !important;
         transform: none !important;
@@ -1243,6 +1247,7 @@ a {
         padding: 0 !important;
         border: none !important;
         box-shadow: none !important;
+        z-index: 100 !important;
     }
 
     .hero-content {
