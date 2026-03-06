@@ -467,16 +467,17 @@ a {
 
 @media (max-width: 768px) {
     .hero-logo-wrapper {
-        top: 20px;
-        right: 50%;
-        transform: translateX(50%);
-        width: 80vw;
-        max-width: 250px;
-        padding: 10px 15px;
+        top: 15px;
+        left: 15px;
+        right: auto;
+        transform: none;
+        width: 50vw;
+        max-width: 200px;
+        padding: 8px 12px;
     }
 
     .hero-logo-wrapper:hover {
-        transform: translateX(50%) scale(1.02);
+        transform: scale(1.02);
     }
 }
 
@@ -1114,9 +1115,19 @@ a {
         font-size: 2.2rem;
     }
 
+    .hero-image-container {
+        height: auto;
+        aspect-ratio: 1 / 1.1;
+        /* Slightly taller aspect ratio for mobile photo */
+        min-height: unset;
+        max-width: 95%;
+        /* Use more width on mobile */
+        margin: 1rem auto;
+    }
+
     .hero-content {
-        padding: 2rem;
-        margin-top: -50px;
+        padding: 2rem 1.5rem;
+        margin-top: -30px;
     }
 
     .hero-overlay-text .hero-title-overlay {
