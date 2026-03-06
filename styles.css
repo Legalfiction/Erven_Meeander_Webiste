@@ -1085,6 +1085,10 @@ a {
 }
 
 @media (max-width: 768px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+
     .main-nav {
         display: flex;
         flex-wrap: wrap;
@@ -1130,7 +1134,7 @@ a {
     }
 
     .hero {
-        padding-top: 130px;
+        padding-top: 90px;
     }
 
     .hero-image-container {
@@ -1237,8 +1241,8 @@ a {
 /* FINAL MOBILE OVERRIDES - Must be at the very bottom to win specificity/order */
 @media (max-width: 768px) {
     .hero-logo-wrapper {
-        top: -60px !important;
-        right: 0 !important;
+        top: 10px !important;
+        right: 15px !important;
         left: auto !important;
         transform: none !important;
         width: 70px !important;
