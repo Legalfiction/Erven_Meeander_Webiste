@@ -429,16 +429,21 @@ a {
 
 .hero-logo-wrapper {
     position: absolute;
-    top: 120px;
-    right: 50px;
-    width: 18vw;
-    /* Schaalbaar t.o.v. schermbreedte (40% verkleind) */
-    min-width: 150px;
-    max-width: 192px;
+    top: 100px;
+    right: 25px;
+    width: 13vw;
+    /* Groter op desktop */
+    height: 10vw;
+    /* Perfecte ovaal */
+    min-width: 140px;
+    min-height: 110px;
     z-index: 30;
-    padding: 5px;
-    /* Kleine marge rondom het logo waardoor het vullend is */
+    padding: 0;
     background-color: transparent;
+    border-radius: 50%;
+    overflow: hidden;
+    border: none !important;
+    box-shadow: none !important;
 
     /* Wavy sketchy borders rondom het volledige gebied qua schaalbare SVG */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cpath d='M 200,5 C 340,5 395,60 395,150 C 395,240 340,295 200,295 C 60,295 5,240 5,150 C 5,60 60,5 200,5 Z' fill='%23FFFFFF'/%3E%3Cpath d='M 200,10 C 320,15 385,50 390,150 C 395,250 310,285 200,290 C 90,295 15,240 10,150 C 5,60 80,5 200,10 Z' fill='none' stroke='%234A90E2' stroke-width='4' opacity='0.7' stroke-linecap='round'/%3E%3Cpath d='M 200,15 C 310,5 380,60 380,150 C 380,240 300,280 200,285 C 100,290 20,250 20,150 C 20,50 90,25 200,15 Z' fill='none' stroke='%234A90E2' stroke-width='2' opacity='0.9' stroke-linecap='round'/%3E%3Cpath d='M 200,5 C 330,10 395,60 395,150 C 395,240 320,295 200,295 C 80,295 5,230 5,150 C 5,70 70,-5 200,5 Z' fill='none' stroke='%234A90E2' stroke-width='3' opacity='0.8' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -446,7 +451,6 @@ a {
     background-repeat: no-repeat;
     background-size: 100% 100%;
 
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
     transition: transform 0.3s ease;
     display: flex;
     justify-content: center;
@@ -458,27 +462,23 @@ a {
 }
 
 .hero-logo {
-    width: 100%;
-    /* Vult vrijwel het hele overgebleven gebied na de lichte padding */
-    height: auto;
+    width: 110%;
+    height: 110%;
     display: block;
     object-fit: contain;
 }
 
 @media (max-width: 768px) {
     .hero-logo-wrapper {
-        top: 60px;
-        left: 15px;
-        right: auto;
-        transform: none;
-        width: 120px;
-        height: 120px;
-        /* Forceert een ronde vorm voor de streperige SVG border */
-        padding: 5px;
-    }
-
-    .hero-logo-wrapper:hover {
-        transform: scale(1.02);
+        top: 60px !important;
+        right: 15px !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100px !important;
+        height: 80px !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        border: none !important;
     }
 }
 
@@ -1085,12 +1085,22 @@ a {
 
 @media (max-width: 768px) {
     .main-nav {
-        display: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .main-nav a {
+        font-size: 0.85rem;
+        padding: 5px 10px;
     }
 
     /* Hide for simple mobile */
     .mobile-menu-btn {
-        display: block;
+        display: none !important;
     }
 
     .grid-layout {
@@ -1223,8 +1233,10 @@ a {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 !important;
-        border: none !important;
-        border-radius: 0 !important;
+        /* Verwijder de overrides die de speelse borders weghaalden:
+           border: none !important;
+           border-radius: 0 !important; 
+        */
         transform: none !important;
         height: auto !important;
         aspect-ratio: 16 / 9;
@@ -1232,28 +1244,23 @@ a {
     }
 
     .hero-image {
-        border-radius: 0 !important;
-        border: none !important;
+        /* Verwijder overrides zodat randen werken op mobiel */
         object-position: center 30%;
         /* Focus on the house while allowing full width */
     }
 
     .hero-logo-wrapper {
-        top: 10px !important;
-        right: 10px !important;
-        /* BACK TO TOP-RIGHT */
+        top: 60px !important;
+        /* Lager op mobiel om tekst vrij te houden */
+        right: 15px !important;
         left: auto !important;
         transform: none !important;
-        width: 25vw !important;
-        /* 50% SMALLER (was ~50vw) */
-        max-width: 120px !important;
-        /* Hard limit for small screens */
-        padding: 4px 8px !important;
-        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2)) !important;
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        /* Semi-transparent for readability */
-        border: 2px solid var(--color-blue-dark) !important;
-        /* Smaller, cleaner border */
+        width: 100px !important;
+        height: 80px !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
     }
 
     .hero-content {
