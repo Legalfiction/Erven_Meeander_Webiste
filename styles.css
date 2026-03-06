@@ -693,6 +693,19 @@ a {
 }
 
 /* =========================================
+   BLOG STAGGER EFFECTS
+========================================= */
+.stagger-left {
+    margin: 0 15% 3rem 0;
+    text-align: left;
+}
+
+.stagger-right {
+    margin: 0 0 3rem 15%;
+    text-align: left;
+}
+
+/* =========================================
    VRIENDEN VAN (Donations)
 ========================================= */
 .friends-section {
@@ -1149,8 +1162,13 @@ a {
     }
 
     .hero-content {
-        padding: 2rem 1.5rem;
-        margin-top: -30px;
+        margin-top: 0 !important;
+        padding: 2.5rem 1.5rem !important;
+    }
+
+    .stagger-left,
+    .stagger-right {
+        margin: 0 0 2rem 0;
     }
 
     .hero-overlay-text .hero-title-overlay {
