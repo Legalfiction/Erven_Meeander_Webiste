@@ -52,11 +52,10 @@
             <!-- HERO SECTION -->
             <section class="hero" id="home">
                 <div class="hero-image-container fade-in">
-                    <div class="hero-overlay-text">
-                        <div class="hero-title-overlay">Erve Meander</div>
-                        <div class="hero-subtitle-overlay">Hellendoorn, Overijssel</div>
+                    <!-- Groot logo rechtsboven -->
+                    <div class="hero-logo-wrapper fade-in">
+                        <img src="logo.png" alt="Erve Meander Logo" class="hero-logo">
                     </div>
-                    <img src="logo.png" alt="Erve Meander Logo" class="hero-logo-sketchy fade-in">
                     <img src="huis.jpg" alt="Houten Twin-model in het groene landschap" class="hero-image"
                         onerror="this.src='https://via.placeholder.com/1920x800?text=Houtbouw+in+landschap';">
                     <div class="hero-image-overlay"></div>
@@ -71,8 +70,8 @@
             <!-- BLOG CONTENT -->
             <section class="meander-section" style="padding-top: 2rem; padding-bottom: 5rem;">
                 <div class="meander-content fade-in">
-                    <p>De laatste vergunningen zijn binnen en de grondwerkzaamheden worden momenteel ingepland en
-                        voorbereid. Dit is een essentiële mijlpaal in ons traject om Erve Meander van een papieren droom
+                    <p>De plannen bevinden zich momenteel volop in de opstartfase en de eerste contouren worden
+                        uitgewerkt. Dit is een essentiële mijlpaal in ons traject om Erve Meander van een papieren droom
                         naar een tastbare realiteit te brengen.</p>
                     <p>De intensieve samenwerking met de gemeente Hellendoorn, ecologen en landschapsarchitecten werpt
                         zijn vruchten af. Het is bijzonder om te zien hoeveel draagvlak en positieve reacties we
@@ -92,8 +91,7 @@
                         die komen gaan!</p>
 
                     <div style="margin-top: 3rem; text-align: center;">
-                        <a href="index.html#blog" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Terug naar
-                            blogs</a>
+                        <a href="index.html#blog" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Terug</a>
                     </div>
                 </div>
             </section>
@@ -121,18 +119,22 @@
 
                 <div class="footer-col form-col">
                     <h3>Interesse? Neem contact op</h3>
-                    <form id="contactForm" class="contact-form">
+                    <form id="contactForm" action="https://formsubmit.co/aldo.huizinga@gmail.com" method="POST"
+                        class="contact-form">
+                        <!-- Bescherming via formsubmit (optioneel, maar we laten de afhandeling aan formsubmit over) -->
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="https://ervemeander.nl/">
                         <div class="form-group">
                             <label for="name">Naam</label>
-                            <input type="text" id="name" required placeholder="Uw naam">
+                            <input type="text" id="name" name="name" required placeholder="Uw naam">
                         </div>
                         <div class="form-group">
                             <label for="email">E-mailadres</label>
-                            <input type="email" id="email" required placeholder="Uw e-mailadres">
+                            <input type="email" id="email" name="email" required placeholder="Uw e-mailadres">
                         </div>
                         <div class="form-group">
                             <label for="interest">Ik heb interesse als:</label>
-                            <select id="interest" required>
+                            <select id="interest" name="interest" required>
                                 <option value="" disabled selected>Kies een optie...</option>
                                 <option value="bewoner">Bewoner</option>
                                 <option value="vrijwilliger">Vrijwilliger</option>

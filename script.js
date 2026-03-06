@@ -65,38 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================================
-       4. FORM SUBMISSION (Mock)
+       4. FORM SUBMISSION (Real form handling via formsubmit)
     ========================================= */
-    const contactForm = document.getElementById('contactForm');
-    const formMessage = document.getElementById('form-message');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent page reload
-
-            const btn = contactForm.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-
-            // Show loading state
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verzenden...';
-            btn.disabled = true;
-
-            // Simulate server request
-            setTimeout(() => {
-                contactForm.reset();
-                contactForm.style.display = 'none';
-                formMessage.classList.remove('hidden');
-
-                // Reset after 5 seconds
-                setTimeout(() => {
-                    formMessage.classList.add('hidden');
-                    contactForm.style.display = 'block';
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }, 5000);
-            }, 1500);
-        });
-    }
+    // Geen e.preventDefault() meer nodig, het formulier wordt native verzonden.
 
     /* =========================================
        5. FAQ ACCORDION LOGIC
