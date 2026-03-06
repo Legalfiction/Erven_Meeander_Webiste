@@ -1215,6 +1215,7 @@ a {
     max-width: 90%;
     transform: rotate(-0.5deg);
 }
+
 /* FINAL MOBILE OVERRIDES - Must be at the very bottom to win specificity/order */
 @media (max-width: 768px) {
     .hero-image-container {
@@ -1225,32 +1226,47 @@ a {
         border-radius: 0 !important;
         transform: none !important;
         height: auto !important;
-        aspect-ratio: 16 / 9; /* Professional widescreen for full-width photo */
+        aspect-ratio: 16 / 9;
+        /* Professional widescreen for full-width photo */
     }
 
     .hero-image {
         border-radius: 0 !important;
         border: none !important;
-        object-position: center center;
+        object-position: center 30%;
+        /* Focus on the house while allowing full width */
     }
 
     .hero-logo-wrapper {
         top: 10px !important;
-        left: 10px !important;
-        right: auto !important;
+        right: 10px !important;
+        /* BACK TO TOP-RIGHT */
+        left: auto !important;
         transform: none !important;
-        width: 45vw !important;
-        max-width: 180px !important;
-        padding: 5px 10px !important;
-        filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)) !important;
+        width: 25vw !important;
+        /* 50% SMALLER (was ~50vw) */
+        max-width: 120px !important;
+        /* Hard limit for small screens */
+        padding: 4px 8px !important;
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2)) !important;
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        /* Semi-transparent for readability */
+        border: 2px solid var(--color-blue-dark) !important;
+        /* Smaller, cleaner border */
     }
 
     .hero-content {
         margin-top: 0 !important;
-        padding: 2rem 1.5rem !important;
+        padding: 2.5rem 1.5rem !important;
         background-color: var(--color-bg-white) !important;
         border-radius: 0 !important;
         border: none !important;
         box-shadow: none !important;
+    }
+
+    /* Ensure text in hero content is readable and doesn't conflict */
+    .hero-content h1 {
+        font-size: 1.8rem !important;
+        margin-top: 0.5rem;
     }
 }
