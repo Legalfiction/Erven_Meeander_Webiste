@@ -1258,7 +1258,8 @@ a {
         min-height: unset;
         max-width: 95%;
         /* Use more width on mobile */
-        margin: 0 auto;
+        margin: 15px auto 0 auto;
+        /* Kleine marge boven de foto */
         overflow: visible !important;
     }
 
@@ -1385,7 +1386,7 @@ a {
 
     /* Ensure text in hero content is readable and doesn't conflict */
     .hero-content h1 {
-        font-size: clamp(1rem, 5vw, 1.4rem) !important;
+        font-size: clamp(1.1rem, 6vw, 1.4rem) !important;
         /* Dynamisch verkleind zodat zin 2 exact op 1 regel past */
         margin-top: 0.5rem;
     }
