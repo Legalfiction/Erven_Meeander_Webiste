@@ -396,25 +396,27 @@ a {
     margin: 0 auto;
 }
 
-/* Safe meandering text effect inside specific blocks */
-#visie .meander-content>p,
+/* Geen staggering in de visie sectie: tekst gecentreerd */
+#visie .meander-content>p {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Wonen-Zorg houdt zijn stagger effect */
 #wonen-zorg .meander-content .care-text>p {
     transition: margin 0.5s ease-in-out;
 }
 
-#visie .meander-content>p:nth-of-type(1),
 #wonen-zorg .meander-content .care-text>p:nth-of-type(1) {
     margin-right: 15%;
     margin-left: 0;
 }
 
-#visie .meander-content>p:nth-of-type(2),
 #wonen-zorg .meander-content .care-text>p:nth-of-type(2) {
     margin-left: 10%;
     margin-right: 5%;
 }
 
-#visie .meander-content>p:nth-of-type(3),
 #wonen-zorg .meander-content .care-text>p:nth-of-type(3) {
     margin-left: 15%;
     margin-right: 0;
@@ -616,10 +618,18 @@ a {
 /* =========================================
    WONEN & ZORG
 ========================================= */
-/* Philosophy desktop: keep original meander-style with paragraph indentation */
+/* Philosophy desktop: centered with title above text */
+.philosophy .meander-content {
+    text-align: center;
+    padding: 1.5rem 0.5rem;
+    /* Kleine marges naar de blauwe lijnen */
+}
+
 .philosophy .meander-content p {
     margin-left: 0;
     margin-right: 0;
+    font-size: 1.2rem;
+    /* Groter lettertype op desktop */
 }
 
 .living-care h2 {
@@ -1285,8 +1295,9 @@ a {
 
     .hero .subtitle {
         font-size: 1rem !important;
-        /* Kleiner font zodat het past */
         padding: 0 0.5rem !important;
+        color: var(--color-text-main) !important;
+        /* Donker lettertype zoals de rest van de pagina */
     }
 
     /* Filosofie: alleen centreren op mobiel */
