@@ -515,12 +515,13 @@ a {
     border-radius: 40px 40px 0 0;
     text-align: center;
     padding: 3rem 0;
-    /* Removing left/right padding to allow full width text */
     box-shadow: none;
     z-index: 20;
     text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
-    max-width: 1100px;
-    /* Override narrow 580px max-width from .meander-content */
+    max-width: 800px;
+    /* Veilige breedte, blijft tussen de blauwe lijnen */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -530,14 +531,13 @@ a {
     margin-bottom: 1.5rem;
     white-space: pre-wrap;
     /* Ensure <br> splits into two lines explicitly */
+    color: var(--color-blue-dark);
+    /* Color of the regular text in H1 */
 }
 
 .text-green-dark {
     color: var(--color-green-dark);
-}
-
-.text-blue-dark {
-    color: var(--color-blue-dark);
+    /* For Erve Meander specifically */
 }
 
 .hero .subtitle {
