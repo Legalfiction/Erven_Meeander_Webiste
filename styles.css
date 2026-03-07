@@ -1177,13 +1177,12 @@ a {
     }
 
     .main-nav {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        /* 3 gelijke kolommen voor strakkere uitlijning */
-        justify-content: end;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
         /* Align to the right side */
-        gap: 6px 4px;
-        /* Small vertical gap, small horizontal gap */
+        gap: 6px 12px;
+        /* Small vertical gap, comfortable horizontal gap */
         flex: 1;
         /* Take up remaining space next to logo */
         margin-top: 0;
@@ -1192,12 +1191,10 @@ a {
     }
 
     .main-nav a {
-        font-size: 0.75rem;
-        /* Kleine fontsize om naast elkaar te passen */
+        font-size: 0.8rem;
+        /* Iets grotere fontsize maar natuurlijke flow */
         padding: 2px 0;
-        /* Minimal padding to fit everything */
         white-space: nowrap;
-        /* Voorkom dat woorden zelf afbreken (zoals "De Community") */
     }
 
     /* Hide for simple mobile */
@@ -1214,9 +1211,9 @@ a {
     }
 
     .logo {
-        height: 50px;
-        /* Maximaal vergroot zodat deze goed zichtbaar is */
-        margin-right: 10px;
+        height: 55px;
+        /* Maximaal vergroot zodat deze goed zichtbaar is op mobiel, past nog net in header */
+        margin-right: 15px;
         /* Spacing between logo and menu items */
         display: block !important;
     }
@@ -1250,7 +1247,8 @@ a {
     }
 
     .hero {
-        padding-top: 90px;
+        padding-top: 30px;
+        /* Fors minder padding boven de foto op mobiel */
     }
 
     .hero-image-container {
@@ -1387,7 +1385,8 @@ a {
 
     /* Ensure text in hero content is readable and doesn't conflict */
     .hero-content h1 {
-        font-size: 1.8rem !important;
+        font-size: clamp(1rem, 5vw, 1.4rem) !important;
+        /* Dynamisch verkleind zodat zin 2 exact op 1 regel past */
         margin-top: 0.5rem;
     }
 }
