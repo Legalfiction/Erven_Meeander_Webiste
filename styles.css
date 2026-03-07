@@ -875,6 +875,9 @@ a {
     transition: var(--transition-fast);
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 20;
+    /* Ensure the card and its text is above .scatter-tree (z-index: 15) */
 }
 
 .strict-card:hover {
