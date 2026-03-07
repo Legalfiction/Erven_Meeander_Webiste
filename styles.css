@@ -191,7 +191,8 @@ a {
     height: 30px;
     /* Reduced to fit smaller header */
     width: auto;
-    display: block;
+    display: none;
+    /* Hidden on desktop, shown on mobile */
 }
 
 .main-nav {
@@ -528,13 +529,20 @@ a {
 .hero h1 {
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
+    color: var(--color-green-dark);
+    /* Color Erve Meander title green for all devices */
+    white-space: pre-wrap;
+    /* Ensure <br> splits into two lines explicitly */
 }
 
 .hero .subtitle {
     font-size: 1.5rem;
     color: var(--color-blue-dark);
     margin-bottom: 2.5rem;
-    max-width: 1100px;
+    max-width: 100%;
+    /* Removing the forced narrow max-width */
+    padding: 0 1rem;
+    /* Less left/right margin on desktop */
     margin-left: auto;
     margin-right: auto;
 }
@@ -1166,22 +1174,46 @@ a {
     .main-nav {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: flex-start;
+        /* Aligne next to logo */
         gap: 6px;
-        width: 100%;
-        margin-top: 10px;
-        padding: 0 5px;
+        flex: 1;
+        /* Take up remaining space */
+        margin-top: 0;
+        /* Remove top margin so it aligns with logo */
+        padding: 0;
     }
 
     .main-nav a {
         font-size: 0.8rem;
-        padding: 5px 8px;
+        padding: 4px 6px;
         text-align: center;
     }
 
     /* Hide for simple mobile */
     .mobile-menu-btn {
         display: none !important;
+    }
+
+    /* Logo handling for mobile: Move it back to the top header instead of the float */
+    .header-container {
+        padding: 5px 10px;
+        /* Adjust padding for tight mobile space */
+        justify-content: flex-start;
+        /* Align contents to start */
+    }
+
+    .logo {
+        height: 30px;
+        /* Make it slightly more visible on mobile */
+        margin-right: 15px;
+        /* Spacing between logo and menu items */
+        display: block !important;
+    }
+
+    .hero-logo-wrapper {
+        display: none !important;
+        /* Hide the big floating logo bubble on mobile */
     }
 
     .grid-layout {
