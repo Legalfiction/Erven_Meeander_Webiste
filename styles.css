@@ -1254,8 +1254,8 @@ a {
     }
 
     .hero {
-        padding-top: 30px;
-        /* Fors minder padding boven de foto op mobiel */
+        padding-top: calc(var(--header-height) + 30px);
+        /* Zichtbare witte marge boven de foto op mobiel */
     }
 
     .hero-image-container {
