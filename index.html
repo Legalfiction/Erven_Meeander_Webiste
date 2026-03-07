@@ -412,6 +412,8 @@
                         <!-- Bescherming via formsubmit (optioneel, maar we laten de afhandeling aan formsubmit over) -->
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_next" value="https://ervemeander.nl/">
+                        <input type="hidden" name="_autoresponse"
+                            value="Hartelijk dank voor je interesse en bericht! We hebben je gegevens in goede orde ontvangen en streven ernaar om zo spoedig mogelijk contact met je op te nemen. Met vriendelijke groet, Erve Meander">
                         <div class="form-group">
                             <label for="name">Naam</label>
                             <input type="text" id="name" name="name" required placeholder="Uw naam">
@@ -429,6 +431,10 @@
                                 <option value="donateur">Donateur</option>
                                 <option value="anders">Anders / Vraag</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Bericht / Toelichting</label>
+                            <textarea id="message" name="message" placeholder="Jouw bericht of vragen..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary submit-btn">Verstuur <i
                                 class="fas fa-paper-plane"></i></button>
