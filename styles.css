@@ -304,10 +304,9 @@ a {
 /* Scattered Trees */
 .scatter-tree {
     position: absolute;
-    z-index: 5;
-    mix-blend-mode: multiply;
+    z-index: 15;
     pointer-events: none;
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 .tree-1 {
