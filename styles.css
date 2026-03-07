@@ -614,13 +614,7 @@ a {
 /* =========================================
    WONEN & ZORG
 ========================================= */
-.philosophy .meander-content {
-    text-align: center;
-    /* Centreer alle tekst in de filosofie sectie op desktop */
-    padding: 1.5rem 1rem;
-    /* Kleine marges naar de blauwe lijnen */
-}
-
+/* Philosophy desktop: keep original meander-style with paragraph indentation */
 .philosophy .meander-content p {
     margin-left: 0;
     margin-right: 0;
@@ -1280,7 +1274,22 @@ a {
 
     .hero-content {
         margin-top: 0 !important;
-        padding: 2.5rem 1.5rem !important;
+        padding: 1rem 1rem !important;
+        /* Minder padding zodat tekst binnen de golven valt */
+        max-width: 100% !important;
+        /* Vul de breedte van de golven */
+    }
+
+    .hero .subtitle {
+        font-size: 1rem !important;
+        /* Kleiner font zodat het past */
+        padding: 0 0.5rem !important;
+    }
+
+    /* Filosofie: alleen centreren op mobiel */
+    .philosophy .meander-content {
+        text-align: center;
+        padding: 1.5rem 1rem;
     }
 
     .stagger-left,
