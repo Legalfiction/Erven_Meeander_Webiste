@@ -528,10 +528,16 @@ a {
 .hero h1 {
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
-    color: var(--color-green-dark);
-    /* Color Erve Meander title green for all devices */
     white-space: pre-wrap;
     /* Ensure <br> splits into two lines explicitly */
+}
+
+.text-green-dark {
+    color: var(--color-green-dark);
+}
+
+.text-blue-dark {
+    color: var(--color-blue-dark);
 }
 
 .hero .subtitle {
@@ -540,8 +546,8 @@ a {
     margin-bottom: 2.5rem;
     max-width: 100%;
     /* Removing the forced narrow max-width */
-    padding: 0 1rem;
-    /* Less left/right margin on desktop */
+    padding: 0;
+    /* Geen witte marges links en rechts op desktop */
     margin-left: auto;
     margin-right: auto;
 }
@@ -1172,24 +1178,26 @@ a {
 
     .main-nav {
         display: grid;
-        grid-template-columns: repeat(3, auto);
-        /* 3 items per line -> 2 lines for 6 items */
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 gelijke kolommen voor strakkere uitlijning */
         justify-content: end;
         /* Align to the right side */
-        gap: 6px 12px;
-        /* Small vertical gap, larger horizontal gap */
+        gap: 6px 4px;
+        /* Small vertical gap, small horizontal gap */
         flex: 1;
         /* Take up remaining space next to logo */
         margin-top: 0;
         padding: 0;
+        text-align: right;
     }
 
     .main-nav a {
-        font-size: 0.8rem;
-        padding: 4px 0;
+        font-size: 0.75rem;
+        /* Kleine fontsize om naast elkaar te passen */
+        padding: 2px 0;
         /* Minimal padding to fit everything */
-        text-align: right;
-        /* Right align the text */
+        white-space: nowrap;
+        /* Voorkom dat woorden zelf afbreken (zoals "De Community") */
     }
 
     /* Hide for simple mobile */
@@ -1199,16 +1207,16 @@ a {
 
     /* Logo handling for mobile: Move it back to the top header instead of the float */
     .header-container {
-        padding: 5px 10px;
+        padding: 5px 8px;
         /* Adjust padding for tight mobile space */
         justify-content: flex-start;
         /* Align contents to start */
     }
 
     .logo {
-        height: 30px;
-        /* Make it slightly more visible on mobile */
-        margin-right: 15px;
+        height: 50px;
+        /* Maximaal vergroot zodat deze goed zichtbaar is */
+        margin-right: 10px;
         /* Spacing between logo and menu items */
         display: block !important;
     }
