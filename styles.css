@@ -511,17 +511,16 @@ a {
 
 .hero-content {
     margin-top: -50px;
-    /* Pull content up over the image slightly less */
     background-color: transparent;
-    /* Give hero content a solid white box that starts the meander */
     border-radius: 40px 40px 0 0;
-    /* Smooth rounded top */
     text-align: center;
-    padding: 3rem 4rem;
-    /* Reduced top padding to not increase total height */
+    padding: 3rem 0;
+    /* Removing left/right padding to allow full width text */
     box-shadow: none;
     z-index: 20;
     text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+    max-width: 1100px;
+    /* Override narrow 580px max-width from .meander-content */
 }
 
 
@@ -1172,22 +1171,25 @@ a {
     }
 
     .main-nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        /* Aligne next to logo */
-        gap: 6px;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        /* 3 items per line -> 2 lines for 6 items */
+        justify-content: end;
+        /* Align to the right side */
+        gap: 6px 12px;
+        /* Small vertical gap, larger horizontal gap */
         flex: 1;
-        /* Take up remaining space */
+        /* Take up remaining space next to logo */
         margin-top: 0;
-        /* Remove top margin so it aligns with logo */
         padding: 0;
     }
 
     .main-nav a {
         font-size: 0.8rem;
-        padding: 4px 6px;
-        text-align: center;
+        padding: 4px 0;
+        /* Minimal padding to fit everything */
+        text-align: right;
+        /* Right align the text */
     }
 
     /* Hide for simple mobile */
