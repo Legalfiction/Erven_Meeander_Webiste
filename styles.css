@@ -880,6 +880,20 @@ a {
     /* Ensure the card and its text is above .scatter-tree (z-index: 15) */
 }
 
+/* Adjust padding for the first two cards which overlap with the tree */
+.blog-cards .strict-card:nth-child(1),
+.blog-cards .strict-card:nth-child(2) {
+    padding-left: 6rem;
+}
+
+@media (max-width: 1024px) {
+
+    .blog-cards .strict-card:nth-child(1),
+    .blog-cards .strict-card:nth-child(2) {
+        padding-left: 2rem;
+    }
+}
+
 .strict-card:hover {
     box-shadow: 6px 6px 0px rgba(74, 144, 226, 0.3);
     border-color: var(--color-blue-dark);
