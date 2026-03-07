@@ -197,7 +197,8 @@ a {
 
 .main-nav {
     display: flex;
-    gap: 2rem;
+    gap: 1.2rem;
+    /* Compacter: was 2rem */
     align-items: center;
 }
 
@@ -542,13 +543,13 @@ a {
 }
 
 .hero .subtitle {
+    font-family: var(--font-body);
+    /* Zelfde lettertype als de rest van de pagina */
     font-size: 1.5rem;
     color: var(--color-blue-dark);
     margin-bottom: 2.5rem;
     max-width: 100%;
-    /* Removing the forced narrow max-width */
     padding: 0;
-    /* Geen witte marges links en rechts op desktop */
     margin-left: auto;
     margin-right: auto;
 }
@@ -763,7 +764,8 @@ a {
 
 .friends-content {
     flex: 1;
-    padding: 4rem;
+    padding: 2rem 2rem;
+    /* Minder links/rechts marge: was 4rem */
     color: white;
     display: flex;
     flex-direction: column;
