@@ -18,7 +18,8 @@
 
     /* Layout */
     --meander-width: 1000px;
-    --header-height: 80px;
+    --header-height: 60px;
+    /* Reduced from 80px */
     --border-radius-sm: 8px;
     --border-radius-lg: 24px;
     --transition-fast: 0.2s ease;
@@ -161,7 +162,8 @@ a {
 .header-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 10px 2rem;
+    padding: 5px 2rem;
+    /* Reduced padding from 10px */
     min-height: var(--header-height);
     display: flex;
     justify-content: space-between;
