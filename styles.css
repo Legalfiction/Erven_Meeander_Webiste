@@ -435,8 +435,8 @@ a {
 .hero {
     position: relative;
     width: 100%;
-    padding-top: calc(var(--header-height) + 20px);
-    /* pushes below sticky header */
+    padding-top: calc(var(--header-height) + 50px);
+    /* Extra witruimte tussen menu en foto op desktop */
 }
 
 .hero-image-container {
@@ -581,6 +581,8 @@ a {
     display: flex;
     gap: 1.5rem;
     margin-top: 2rem;
+    justify-content: center;
+    /* Centreer de iconen */
 }
 
 .icon-box {
@@ -611,6 +613,11 @@ a {
 /* =========================================
    WONEN & ZORG
 ========================================= */
+.philosophy .meander-content {
+    text-align: center;
+    /* Centreer alle tekst in de filosofie sectie op desktop */
+}
+
 .living-care h2 {
     text-align: center;
     margin-bottom: 3rem;
