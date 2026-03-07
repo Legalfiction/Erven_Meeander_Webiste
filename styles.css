@@ -1415,3 +1415,28 @@ a {
         margin-top: 0.5rem;
     }
 }
+
+/* =========================================
+   LANDSCAPE MOBILE: tekst binnen de blauwe golven
+========================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+    .hero-content {
+        max-width: 70% !important;
+        /* Smal genoeg om binnen de golven te blijven */
+        padding: 1rem 1rem !important;
+        margin: 0 auto !important;
+    }
+
+    .hero .subtitle {
+        font-size: 0.9rem !important;
+        padding: 0 0.5rem !important;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(1rem, 3.5vw, 1.3rem) !important;
+    }
+
+    .meander-content {
+        padding: 2rem 1rem !important;
+    }
+}
