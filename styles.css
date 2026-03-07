@@ -441,7 +441,8 @@ a {
 
 .hero-image-container {
     width: 100%;
-    height: 60vh;
+    height: 70vh;
+    /* Groter op desktop */
     min-height: 400px;
     position: relative;
 }
@@ -616,6 +617,13 @@ a {
 .philosophy .meander-content {
     text-align: center;
     /* Centreer alle tekst in de filosofie sectie op desktop */
+    padding: 1.5rem 1rem;
+    /* Kleine marges naar de blauwe lijnen */
+}
+
+.philosophy .meander-content p {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .living-care h2 {
