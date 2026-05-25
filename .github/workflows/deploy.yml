@@ -1,0 +1,34 @@
+name: Deploy naar Pi
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  APP_NAAM: ervemeander
+
+jobs:
+  deploy:
+    name: Deploy ${{ env.APP_NAAM }}
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull nieuwste code
+        run: |
+          cd ~/apps/${{ env.APP_NAAM }}
+          git pull --quiet
+
+      - name: Publiceren naar webroot
+        run: |
+          sudo rsync -a --delete \
+            --exclude='.git' \
+            --exclude='backup_old' \
+            --exclude='*.py' \
+            ~/apps/${{ env.APP_NAAM }}/ \
+            /var/www/${{ env.APP_NAAM }}/
+          sudo chown -R www-data:www-data /var/www/${{ env.APP_NAAM }}
+
+      - name: Bevestiging
+        run: |
+          echo "✓ ${{ env.APP_NAAM }} live — $(git -C ~/apps/${{ env.APP_NAAM }} log -1 --format='%h %s')"
