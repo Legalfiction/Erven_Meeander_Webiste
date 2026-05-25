@@ -908,6 +908,79 @@ a {
 }
 
 /* =========================================
+   VOOR WIE
+========================================= */
+.voor-wie-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.voor-wie-card {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.voor-wie-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.voor-wie-icon {
+    font-size: 2rem;
+    color: var(--color-green-dark);
+}
+
+.voor-wie-profielen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+}
+
+.profiel-blok {
+    background: #EAF2E3;
+    border: 2px solid var(--color-green-dark);
+    border-radius: 12px 60px 12px 60px / 60px 12px 60px 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profiel-label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-green-dark);
+    letter-spacing: 1px;
+}
+
+.profiel-blok p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.voor-wie-sluitend {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    border-top: 1px dashed var(--color-blue-river);
+    padding-top: 1.25rem;
+    margin: 0;
+}
+
+.voor-wie-sluitend a {
+    color: var(--color-green-dark);
+    font-weight: 600;
+}
+
+/* =========================================
    BLOG
 ========================================= */
 .blog-section h2 {
