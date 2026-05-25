@@ -65,9 +65,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================================
-       4. FORM SUBMISSION (Real form handling via formsubmit)
+       4. FORM SUBMISSION (Web3Forms)
     ========================================= */
-    // Geen e.preventDefault() meer nodig, het formulier wordt native verzonden.
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('form-message');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = contactForm.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verzenden...';
+            btn.disabled = true;
+
+            const formData = {
+                access_key: 'a62b3f12-f90e-4b61-aba0-6071ddd3e65e',
+                subject: 'Nieuwe aanmelding — Erve Meander',
+                from_name: 'Erve Meander Website',
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                interest: document.getElementById('interest').value,
+                message: document.getElementById('message')?.value || '',
+            };
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    contactForm.reset();
+                    contactForm.style.display = 'none';
+                    formMessage.classList.remove('hidden');
+
+                    setTimeout(() => {
+                        formMessage.classList.add('hidden');
+                        contactForm.style.display = 'block';
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 5000);
+                } else {
+                    throw new Error('Verzending mislukt');
+                }
+            } catch {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('Er is iets misgegaan. Probeer het later opnieuw of mail naar aldo.huizinga@gmail.com');
+            }
+        });
+    }
 
     /* =========================================
        5. FAQ ACCORDION LOGIC
