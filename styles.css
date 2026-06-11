@@ -1433,41 +1433,37 @@ a {
         display: none;
     }
 
-    /* Op mobiel: nav-rijen platslaan zodat alle items als één rij wrappen */
+    /* Op mobiel: twee-rijen structuur behouden, kleinere letters zodat 4 items per rij passen */
     .main-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 4px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
+        flex: 1;
+        margin-top: 0;
+        padding: 0;
     }
 
     .nav-row {
-        display: contents;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        justify-content: flex-end;
     }
 
     .hidden-mobile {
         display: none !important;
     }
 
-    .main-nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        /* Align to the right side */
-        gap: 6px 12px;
-        /* Small vertical gap, comfortable horizontal gap */
-        flex: 1;
-        /* Take up remaining space next to logo */
-        margin-top: 0;
-        padding: 0;
-        text-align: right;
+    .main-nav a {
+        font-size: 0.68rem;
+        padding: 1px 0;
+        white-space: nowrap;
     }
 
-    .main-nav a {
-        font-size: 0.8rem;
-        /* Iets grotere fontsize maar natuurlijke flow */
-        padding: 2px 0;
-        white-space: nowrap;
+    .nav-cta {
+        padding: 0.22rem 0.55rem !important;
+        font-size: 0.68rem !important;
     }
 
     /* Hide for simple mobile */
