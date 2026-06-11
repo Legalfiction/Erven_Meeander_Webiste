@@ -47,7 +47,7 @@ body {
     line-height: 1.6;
     background-color: #DCECB9;
     /* Extra kleurrijke, speelse schets strepen in het groene vlak als achtergrond */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Cpath d='M50,150 Q100,100 150,180 T250,120' fill='none' stroke='%23F9D423' stroke-width='6' stroke-linecap='round' opacity='0.7'/%3E%3Cpath d='M600,650 Q650,600 700,620 T780,580' fill='none' stroke='%23FF6B6B' stroke-width='5' stroke-linecap='round' opacity='0.6'/%3E%3Ccircle cx='400' cy='200' r='10' fill='%234A90E2' opacity='0.6'/%3E%3Cpath d='M100,600 Q150,550 180,600 T260,570' fill='none' stroke='%234A90E2' stroke-width='8' stroke-linecap='round' opacity='0.5'/%3E%3Ccircle cx='180' cy='720' r='8' fill='%2382A740' opacity='0.7'/%3E%3Cpath d='M650,180 Q690,130 750,160' fill='none' stroke='%23F9D423' stroke-width='7' stroke-linecap='round' opacity='0.6'/%3E%3Ccircle cx='700' cy='300' r='12' fill='%23FF6B6B' opacity='0.5'/%3E%3Cpath d='M300,50 Q320,80 340,60 T380,90' fill='none' stroke='%2382A740' stroke-width='5' stroke-linecap='round' opacity='0.6'/%3E%3Cpath d='M50,400 Q80,380 120,420 T180,390' fill='none' stroke='%23FF6B6B' stroke-width='4' stroke-linecap='round' opacity='0.6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Cpath d='M50,150 Q100,100 150,180 T250,120' fill='none' stroke='%23F9D423' stroke-width='6' stroke-linecap='round' opacity='0.22'/%3E%3Cpath d='M600,650 Q650,600 700,620 T780,580' fill='none' stroke='%23FF6B6B' stroke-width='5' stroke-linecap='round' opacity='0.18'/%3E%3Ccircle cx='400' cy='200' r='10' fill='%234A90E2' opacity='0.18'/%3E%3Cpath d='M100,600 Q150,550 180,600 T260,570' fill='none' stroke='%234A90E2' stroke-width='8' stroke-linecap='round' opacity='0.15'/%3E%3Ccircle cx='180' cy='720' r='8' fill='%2382A740' opacity='0.22'/%3E%3Cpath d='M650,180 Q690,130 750,160' fill='none' stroke='%23F9D423' stroke-width='7' stroke-linecap='round' opacity='0.18'/%3E%3Ccircle cx='700' cy='300' r='12' fill='%23FF6B6B' opacity='0.15'/%3E%3Cpath d='M300,50 Q320,80 340,60 T380,90' fill='none' stroke='%2382A740' stroke-width='5' stroke-linecap='round' opacity='0.18'/%3E%3Cpath d='M50,400 Q80,380 120,420 T180,390' fill='none' stroke='%23FF6B6B' stroke-width='4' stroke-linecap='round' opacity='0.18'/%3E%3C/svg%3E");
     background-size: 800px 800px;
     background-repeat: repeat;
     overflow-x: hidden;
@@ -199,17 +199,15 @@ a {
 
 .main-nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 0.8rem;
-    align-items: center;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
 }
 
-/* Forceer regelovergang na "Voor Wie" op desktop */
-.nav-break {
-    flex-basis: 100%;
-    height: 0;
-    display: block;
+.nav-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
 }
 
 .main-nav a {
@@ -1435,9 +1433,16 @@ a {
         display: none;
     }
 
-    /* Nav-break niet nodig op mobiel – items wrappen al vanzelf */
-    .nav-break {
-        display: none;
+    /* Op mobiel: nav-rijen platslaan zodat alle items als één rij wrappen */
+    .main-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 4px 10px;
+    }
+
+    .nav-row {
+        display: contents;
     }
 
     .hidden-mobile {
