@@ -991,14 +991,14 @@ a {
 
 .blog-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.2rem;
 }
 
 .strict-card {
     background: #F4F9F1;
     border: 3px solid var(--color-blue-dark);
-    padding: 2rem;
+    padding: 1.2rem 1.4rem;
     border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
     box-shadow: 4px 4px 0px rgba(74, 144, 226, 0.15);
     transition: var(--transition-fast);
@@ -1009,17 +1009,15 @@ a {
     /* Ensure the card and its text is above .scatter-tree (z-index: 15) */
 }
 
-/* Adjust padding for the first two cards which overlap with the tree */
-.blog-cards .strict-card:nth-child(1),
-.blog-cards .strict-card:nth-child(2) {
-    padding-left: 6rem;
+/* Adjust padding for the first card which overlaps with the tree */
+.blog-cards .strict-card:nth-child(1) {
+    padding-left: 5rem;
 }
 
 @media (max-width: 1024px) {
 
-    .blog-cards .strict-card:nth-child(1),
-    .blog-cards .strict-card:nth-child(2) {
-        padding-left: 2rem;
+    .blog-cards .strict-card:nth-child(1) {
+        padding-left: 1.4rem;
     }
 }
 
@@ -1036,22 +1034,41 @@ a {
 }
 
 .blog-date {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--color-text-muted);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+/* Datum op blog-detailpagina's */
+.blog-article-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-green-dark);
+    background: rgba(130, 167, 64, 0.12);
+    border: 1.5px solid var(--color-green-dark);
+    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
 }
 
 .strict-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
 }
 
 .strict-card p {
     flex-grow: 1;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
 .read-more {
