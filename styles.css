@@ -1097,6 +1097,15 @@ a {
     margin-bottom: 0.75rem;
 }
 
+/* Bredere container voor de tweekoloms layout — overschrijft de 580px van meander-content */
+.blog-page-container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+    position: relative;
+    z-index: 10;
+}
+
 .blog-page-layout {
     display: grid;
     grid-template-columns: 1fr 270px;
