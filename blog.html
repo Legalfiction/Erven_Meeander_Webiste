@@ -10,7 +10,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=4">
+    <link rel="stylesheet" href="styles.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -47,353 +47,258 @@
             <img src="farm_tree_pine.png" class="scatter-tree tree-2" alt="Boom">
             <img src="farm_tree_oak.png" class="scatter-tree tree-3" alt="Boom">
 
-            <!-- INTRO -->
-            <section class="meander-section blog-page-hero" id="home">
+            <!-- INTRO + NAVIGATIEBOX -->
+            <section class="meander-section" id="home" style="padding-bottom: 0;">
                 <div class="meander-content fade-in">
                     <h1>Progressie &amp; Updates</h1>
-                    <p class="subtitle" style="max-width: 580px;">Volg de stappen die we zetten op weg naar
-                        Erve Meander. Van het eerste voornemen tot de nieuwste ontwikkelingen.</p>
+                    <p class="subtitle" style="margin-bottom: 2rem;">Volg de stappen die we zetten op weg naar
+                        Erve Meander.</p>
+
+                    <!-- Navigatie naar alle berichten -->
+                    <nav class="blog-nav-box" aria-label="Naar bericht springen">
+                        <p class="blog-nav-box-heading"><i class="fas fa-list-ul"></i>&nbsp; Alle berichten</p>
+                        <ul class="blog-nav-list">
+                            <li><a href="#post-11"><span class="nav-date">Juni 2026</span>Wat een respons — we zijn overweldigd!</a></li>
+                            <li><a href="#post-9"><span class="nav-date">Juni 2026</span>Aan tafel met de gemeente</a></li>
+                            <li><a href="#post-5"><span class="nav-date">Mei 2026</span>Een zorgorganisatie als partner</a></li>
+                            <li><a href="#post-4"><span class="nav-date">Mei 2026</span>Op zoek naar de juiste locatie</a></li>
+                            <li><a href="#post-10"><span class="nav-date">April 2026</span>Zorg onder één dak: de zorgondernemer</a></li>
+                            <li><a href="#post-8"><span class="nav-date">April 2026</span>Wie wonen er straks op Erve Meander?</a></li>
+                            <li><a href="#post-1"><span class="nav-date">Maart 2026</span>Oriëntatiefase &amp; Terrein</a></li>
+                            <li><a href="#post-7"><span class="nav-date">December 2025</span>Het besluit is gevallen: we gaan het doen</a></li>
+                            <li><a href="#post-6"><span class="nav-date">Oktober 2025</span>Het voornemen: kleinschalige zorg met hart</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </section>
 
-            <!-- BLOG LAYOUT: artikelen + zijbalk -->
-            <section class="meander-section" style="padding-top: 0; padding-bottom: 0;">
-                <div class="blog-page-container">
-                    <div class="blog-page-layout">
+            <!-- ALLE BLOG ARTIKELEN -->
+            <section class="meander-section" style="padding-top: 0; padding-bottom: 5rem;">
+                <div class="meander-content">
 
-                        <!-- ===== HOOFDINHOUD ===== -->
-                        <div class="blog-posts-main">
+                    <!-- POST 11 -->
+                    <article class="blog-post-full fade-in" id="post-11">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Juni 2026</div>
+                        <h2 class="post-title">Wat een respons — we zijn overweldigd!</h2>
+                        <p>We hadden gehoopt op interesse. Maar wat we de afgelopen tijd hebben meegemaakt,
+                            overtreft onze verwachtingen ruimschoots. Vanuit heel de regio hebben mensen de weg
+                            naar Erve Meander gevonden — medewerkers die zich willen inzetten voor onze bewoners,
+                            en families die een fijne plek zoeken voor hun naaste. Dat raakt ons, oprecht.</p>
+                        <h2>Zoveel mooie aanmeldingen</h2>
+                        <p>Er hebben zich al flink wat mensen aangemeld: zorgmedewerkers die snakken naar een plek
+                            waar ze écht het verschil kunnen maken, en mogelijke bewoners of hun families die zoeken
+                            naar een thuis dat anders is dan wat ze tot nu toe kennen. De verhalen die we horen zijn
+                            mooi en soms ontroerend. Ze bevestigen elke dag opnieuw waarom we dit doen.</p>
+                        <h2>Iedereen op de wachtlijst</h2>
+                        <p>Omdat we nog volop bezig zijn met de concrete stappen — de locatie, de eventuele
+                            verbouwing en de uiteindelijke start — is het nog te vroeg om definitieve toezeggingen
+                            te doen. Alle aanmeldingen worden zorgvuldig bijgehouden op onze wachtlijst. Zodra er
+                            meer duidelijkheid is, nemen we persoonlijk contact op.</p>
+                        <h2>Uw aanmelding is waardevol</h2>
+                        <p>Staat u nog niet op de lijst, maar wilt u dat wel? Neem dan contact met ons op via het
+                            formulier onderaan deze pagina. Of u nu zorgmedewerker bent, een familie die een plek
+                            zoekt voor een naaste, of iemand die meeleeft — uw interesse is voor ons van grote
+                            waarde. We beloven: het wordt het wachten waard.</p>
+                    </article>
+                    <hr class="blog-post-divider">
 
-                            <!-- POST 11 -->
-                            <article class="blog-post-full fade-in" id="post-11">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Juni 2026</div>
-                                <h2 class="post-title">Wat een respons — we zijn overweldigd!</h2>
-                                <p>We hadden gehoopt op interesse. Maar wat we de afgelopen tijd hebben meegemaakt,
-                                    overtreft onze verwachtingen ruimschoots. Vanuit heel de regio hebben mensen de weg
-                                    naar Erve Meander gevonden — medewerkers die zich willen inzetten voor onze
-                                    bewoners, en families die een fijne plek zoeken voor hun naaste. Dat raakt ons,
-                                    oprecht.</p>
-                                <h2>Zoveel mooie aanmeldingen</h2>
-                                <p>Er hebben zich al flink wat mensen aangemeld: zorgmedewerkers die snakken naar een
-                                    plek waar ze écht het verschil kunnen maken, en mogelijke bewoners of hun families
-                                    die zoeken naar een thuis dat anders is dan wat ze tot nu toe kennen. De verhalen
-                                    die we horen zijn mooi en soms ontroerend. Ze bevestigen elke dag opnieuw waarom
-                                    we dit doen.</p>
-                                <h2>Iedereen op de wachtlijst</h2>
-                                <p>Omdat we nog volop bezig zijn met de concrete stappen — de locatie, de eventuele
-                                    verbouwing en de uiteindelijke start — is het nog te vroeg om definitieve
-                                    toezeggingen te doen. Alle aanmeldingen, zowel van potentiële bewoners als van
-                                    medewerkers, worden zorgvuldig bijgehouden op onze wachtlijst. Zodra er meer
-                                    duidelijkheid is, nemen we persoonlijk contact op.</p>
-                                <h2>Uw aanmelding is waardevol</h2>
-                                <p>Staat u nog niet op de lijst, maar wilt u dat wel? Neem dan contact met ons op via
-                                    het formulier onderaan deze pagina. Of u nu zorgmedewerker bent die wil bijdragen,
-                                    een familie die op zoek is naar een plek voor een naaste, of gewoon iemand die
-                                    meeleeft — uw interesse is voor ons van grote waarde. Elk bericht geeft energie en
-                                    bevestigt dat er behoefte is aan wat Erve Meander te bieden heeft.</p>
-                                <p>We zijn dankbaar voor al het vertrouwen dat mensen in ons stellen, nog vóór er één
-                                    steen is gelegd. Dat vertrouwen dragen we met ons mee in alles wat we doen.
-                                    We beloven: het wordt het wachten waard.</p>
-                            </article>
-                            <hr class="blog-post-divider">
+                    <!-- POST 9 -->
+                    <article class="blog-post-full fade-in" id="post-9">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Juni 2026</div>
+                        <h2 class="post-title">Aan tafel met de gemeente</h2>
+                        <p>In juni 2026 zaten we voor het eerst aan tafel met de gemeente Hellendoorn — zowel met
+                            de afdeling Ruimtelijke Ordening als met het Sociaal Domein. Een waardevol overleg
+                            waarin we verkenden wat Erve Meander en de gemeente voor elkaar kunnen betekenen.</p>
+                        <h2>Ruimtelijke Ordening: wat mag, wat kan?</h2>
+                        <p>Vanuit Ruimtelijke Ordening hebben we besproken welke kaders er gelden voor een
+                            zorgfunctie in het buitengebied van Hellendoorn. Welke bestemmingsplanregels zijn van
+                            toepassing? Waar liggen kansen, en waar moeten we rekening mee houden? Het was een
+                            open gesprek waarbij de gemeente aangeeft mee te willen denken over passende
+                            oplossingen. Dat geeft vertrouwen.</p>
+                        <h2>Sociaal Domein: zorg in de gemeente</h2>
+                        <p>Met het Sociaal Domein spraken we over de bredere context van zorg in Hellendoorn.
+                            Het gesprek bevestigde dat kleinschalige, persoonsgerichte woonzorginitiatieven passen
+                            binnen de ambities van de gemeente. We kijken ernaar uit om dit verder uit te werken.</p>
+                        <h2>Verbinding met de omgeving</h2>
+                        <p>Een belangrijk thema in het overleg was de verbinding van Erve Meander met de gemeente
+                            en haar inwoners. Hoe zorgen we ervoor dat bewoners deel uitmaken van de lokale
+                            gemeenschap? Hoe kunnen buurtbewoners, vrijwilligers en lokale voorzieningen een
+                            natuurlijk onderdeel worden van het dagelijks leven op het erf? Dit zijn vragen die we
+                            serieus nemen en de komende tijd verder uitwerken.</p>
+                        <p>Het eerste contact met de gemeente is gelegd. Een constructieve basis om op voort te
+                            bouwen.</p>
+                    </article>
+                    <hr class="blog-post-divider">
 
-                            <!-- POST 9 -->
-                            <article class="blog-post-full fade-in" id="post-9">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Juni 2026</div>
-                                <h2 class="post-title">Aan tafel met de gemeente</h2>
-                                <p>In juni 2026 zaten we voor het eerst aan tafel met de gemeente Hellendoorn — zowel
-                                    met de afdeling Ruimtelijke Ordening als met het Sociaal Domein. Een waardevol
-                                    overleg waarin we verkenden wat Erve Meander en de gemeente voor elkaar kunnen
-                                    betekenen.</p>
-                                <h2>Ruimtelijke Ordening: wat mag, wat kan?</h2>
-                                <p>Vanuit Ruimtelijke Ordening hebben we besproken welke kaders er gelden voor een
-                                    zorgfunctie in het buitengebied van Hellendoorn. Welke bestemmingsplanregels zijn
-                                    van toepassing? Waar liggen kansen, en waar moeten we als Erve Meander rekening
-                                    mee houden? Het was een open gesprek waarbij de gemeente aangeeft mee te willen
-                                    denken over passende oplossingen. Dat geeft vertrouwen.</p>
-                                <h2>Sociaal Domein: zorg in de gemeente</h2>
-                                <p>Met het Sociaal Domein spraken we over de bredere context van zorg in Hellendoorn.
-                                    Waar liggen behoeften? Hoe sluit Erve Meander aan op het lokale zorglandschap? Het
-                                    gesprek bevestigde dat kleinschalige, persoonsgerichte woonzorginitiatieven passen
-                                    binnen de ambities van de gemeente. We kijken ernaar uit om dit verder uit te
-                                    werken.</p>
-                                <h2>Verbinding met de omgeving</h2>
-                                <p>Een belangrijk thema in het overleg was de verbinding van Erve Meander met de
-                                    gemeente en haar inwoners. Hoe zorgen we ervoor dat bewoners deel uitmaken van de
-                                    lokale gemeenschap en niet geïsoleerd raken? Hoe kunnen buurtbewoners,
-                                    vrijwilligers en lokale voorzieningen een natuurlijk onderdeel worden van het
-                                    dagelijks leven op het erf? Dit zijn vragen die we serieus nemen en die we de
-                                    komende tijd verder uitwerken — samen met de gemeente en de directe omgeving.</p>
-                                <p>Het eerste contact met de gemeente is gelegd. Een constructieve basis om op voort
-                                    te bouwen.</p>
-                            </article>
-                            <hr class="blog-post-divider">
+                    <!-- POST 5 -->
+                    <article class="blog-post-full fade-in" id="post-5">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Mei 2026</div>
+                        <h2 class="post-title">Een zorgorganisatie als partner</h2>
+                        <p>Erve Meander is meer dan een woonplek — het is een zorgomgeving waar mensen veilig,
+                            prettig en met aandacht kunnen leven. Om dat waar te kunnen maken, is samenwerking met
+                            een ervaren zorgorganisatie onmisbaar. We zijn verheugd dat we op dit vlak grote stappen
+                            vooruit zetten.</p>
+                        <h2>Kwaliteit die je kunt vertrouwen</h2>
+                        <p>Een professionele zorgorganisatie brengt interne kwaliteitscontroles mee die geborgd zijn
+                            in de dagelijkse werkwijze. Denk aan gestructureerde evaluaties, heldere protocollen en
+                            toezicht op de kwaliteit van de geleverde zorg. Voor bewoners en hun families is dat een
+                            enorme geruststelling: er is altijd iemand die meekijkt, bijstuurt waar nodig en de lat
+                            hoog houdt.</p>
+                        <h2>De weg naar de zorgverzekeraar</h2>
+                        <p>Zorg financieren is complex. Een zorgorganisatie heeft de contracten, de erkenningen en
+                            de bestaande relaties met zorgverzekeraars al op orde. Dat betekent dat bewoners aanspraak
+                            kunnen maken op de zorg waar zij recht op hebben, zonder ingewikkelde bureaucratische
+                            processen. De zorgorganisatie regelt dit — dat is precies de ontzorging die bij Erve
+                            Meander hoort.</p>
+                        <h2>Het juiste team op de juiste plek</h2>
+                        <p>Goede zorg staat of valt met de mensen die het leveren. Wij hechten er grote waarde aan
+                            dat er een diverse groep medewerkers komt — mensen met verschillende achtergronden,
+                            talenten en persoonlijkheden die elkaar aanvullen. Een gevarieerd team zorgt voor een
+                            rijkere, warmere leefomgeving voor de bewoners.</p>
+                        <p>We kijken met veel enthousiasme naar de volgende stappen. Zodra we meer kunnen delen,
+                            leest u dat hier als eerste.</p>
+                    </article>
+                    <hr class="blog-post-divider">
 
-                            <!-- POST 5 -->
-                            <article class="blog-post-full fade-in" id="post-5">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Mei 2026</div>
-                                <h2 class="post-title">Een zorgorganisatie als partner</h2>
-                                <p>Erve Meander is meer dan een woonplek — het is een zorgomgeving waar mensen veilig,
-                                    prettig en met aandacht kunnen leven. Om dat waar te kunnen maken, is samenwerking
-                                    met een ervaren zorgorganisatie onmisbaar. We zijn verheugd dat we op dit vlak
-                                    grote stappen vooruit zetten.</p>
-                                <h2>Kwaliteit die je kunt vertrouwen</h2>
-                                <p>Een professionele zorgorganisatie brengt interne kwaliteitscontroles mee die
-                                    geborgd zijn in de dagelijkse werkwijze. Denk aan gestructureerde evaluaties,
-                                    heldere protocollen en toezicht op de kwaliteit van de geleverde zorg. Voor
-                                    bewoners en hun families is dat een enorme geruststelling: er is altijd iemand die
-                                    meekijkt, bijstuurt waar nodig en de lat hoog houdt.</p>
-                                <h2>De weg naar de zorgverzekeraar</h2>
-                                <p>Zorg financieren is complex. Een zorgorganisatie heeft de contracten, de
-                                    erkenningen en de bestaande relaties met zorgverzekeraars al op orde. Dat betekent
-                                    dat bewoners aanspraak kunnen maken op de zorg waar zij recht op hebben, zonder
-                                    dat zij of hun families door ingewikkelde bureaucratische processen heen moeten.
-                                    De zorgorganisatie regelt dit — dat is precies de ontzorging die bij Erve Meander
-                                    hoort.</p>
-                                <h2>Het juiste team op de juiste plek</h2>
-                                <p>Goede zorg staat of valt met de mensen die het leveren. Een ervaren
-                                    zorgorganisatie weet hoe je kwalitatief goed personeel aantrekt, selecteert en
-                                    behoudt. Wij hechten er grote waarde aan dat er een diverse groep medewerkers
-                                    komt — mensen met verschillende achtergronden, talenten en persoonlijkheden die
-                                    elkaar aanvullen. Een gevarieerd team zorgt voor een rijkere, warmere
-                                    leefomgeving voor de bewoners.</p>
-                                <p>We kijken met veel enthousiasme naar de volgende stappen. Zodra we meer kunnen
-                                    delen, leest u dat hier als eerste.</p>
-                            </article>
-                            <hr class="blog-post-divider">
+                    <!-- POST 4 -->
+                    <article class="blog-post-full fade-in" id="post-4">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Mei 2026</div>
+                        <h2 class="post-title">Op zoek naar de juiste locatie</h2>
+                        <p>Een mooie stap in mei: we hebben twee bestaande boerderijen bezocht in het buitengebied
+                            van Hellendoorn. Beide locaties maken een veelbelovende indruk en we onderzoeken
+                            momenteel of een van deze erven geschikt te maken is voor Erve Meander.</p>
+                        <p>Wat beide locaties met elkaar gemeen hebben, is de rust en ruimte die je er voelt zodra
+                            je er aankomt. De boerderijen liggen midden in het groen, omgeven door open land dat
+                            volop mogelijkheden biedt. Er is voldoende grond aanwezig om op termijn groenten te
+                            verbouwen of dieren te houden — precies het soort zelfvoorzienende leefomgeving dat bij
+                            de visie van Erve Meander past.</p>
+                        <p>Het idee om een bestaande boerderij als basis te gebruiken heeft een aantal voordelen.
+                            Een bestaand erf heeft al een ingerichte infrastructuur, een karakter dat past bij de
+                            agrarische sfeer die wij zoeken, en staat doorgaans al ingepast in het landschap.</p>
+                        <p>We zijn nu aan het uitzoeken wat er bouwkundig, bestemmingstechnisch en financieel nodig
+                            is om de locatie geschikt te maken. De eerste indruk is positief. We hopen hier in de
+                            komende maanden meer duidelijkheid over te krijgen.</p>
+                        <p>Heeft u grond of een boerderij in de omgeving van Hellendoorn? We horen het graag via
+                            het contactformulier onderaan deze pagina.</p>
+                    </article>
+                    <hr class="blog-post-divider">
 
-                            <!-- POST 4 -->
-                            <article class="blog-post-full fade-in" id="post-4">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Mei 2026</div>
-                                <h2 class="post-title">Op zoek naar de juiste locatie</h2>
-                                <p>Een mooie stap in mei: we hebben twee bestaande boerderijen bezocht in het
-                                    buitengebied van Hellendoorn. Beide locaties maken een veelbelovende indruk en we
-                                    onderzoeken momenteel of een van deze erven geschikt te maken is voor Erve
-                                    Meander.</p>
-                                <p>Wat beide locaties met elkaar gemeen hebben, is de rust en ruimte die je er voelt
-                                    zodra je er aankomt. De boerderijen liggen midden in het groen, omgeven door open
-                                    land dat volop mogelijkheden biedt. Er is voldoende grond aanwezig om op termijn
-                                    groenten te verbouwen of dieren te houden — precies het soort zelfvoorzienende
-                                    leefomgeving dat bij de visie van Erve Meander past.</p>
-                                <p>Het idee om een bestaande boerderij als basis te gebruiken heeft een aantal
-                                    voordelen. Een bestaand erf heeft al een ingerichte infrastructuur, een karakter
-                                    dat past bij de agrarische sfeer die wij zoeken, en staat doorgaans al ingepast
-                                    in het landschap. Dat geeft een mooie vertrekpositie om van te bouwen.</p>
-                                <p>We zijn nu aan het uitzoeken wat er bouwkundig, bestemmingstechnisch en financieel
-                                    nodig is om de locatie geschikt te maken voor onze bewoners en zorgfunctie. De
-                                    eerste indruk is positief. We hopen hier in de komende maanden meer duidelijkheid
-                                    over te krijgen.</p>
-                                <p>Heeft u grond of een boerderij in de omgeving van Hellendoorn, of kent u iemand
-                                    die dat heeft? We horen het graag via het contactformulier onderaan deze pagina.</p>
-                            </article>
-                            <hr class="blog-post-divider">
+                    <!-- POST 10 -->
+                    <article class="blog-post-full fade-in" id="post-10">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> April 2026</div>
+                        <h2 class="post-title">Zorg onder één dak: de zorgondernemer</h2>
+                        <p>Na zorgvuldige afweging hebben we een belangrijke keuze gemaakt over hoe de zorg op Erve
+                            Meander georganiseerd wordt. We kiezen voor een model waarbij een zorgondernemer de
+                            volledige verantwoordelijkheid draagt voor alles wat zich binnen ons huis afspeelt.</p>
+                        <h2>Één eindverantwoordelijke</h2>
+                        <p>De zorgondernemer is het hart van de dagelijkse zorgverlening op Erve Meander. Hij of
+                            zij draagt de volledige verantwoordelijkheid voor de kwaliteit van de geboden zorg, de
+                            samenstelling en aansturing van het team en alles wat daarmee samenhangt. Dat betekent
+                            korte lijnen, snelle beslissingen en een aanspreekpunt dat echt betrokken is.</p>
+                        <h2>Goed personeel, goed georganiseerd</h2>
+                        <p>De zorgondernemer is ook verantwoordelijk voor het aannemen en begeleiden van
+                            medewerkers. We zoeken mensen die passen bij de cultuur van Erve Meander: warm,
+                            betrokken en professioneel. Bewoners hebben herkenbare gezichten om zich heen — mensen
+                            die weten hoe zij in elkaar zitten en wat ze nodig hebben.</p>
+                        <h2>Altijd iemand beschikbaar — ook 's nachts</h2>
+                        <p>Zorg houdt niet op als de dag voorbij is. Op Erve Meander is ook de nachtzorg goed
+                            geregeld. Wanneer een bewoner in de nacht hulp nodig heeft, is er altijd iemand
+                            beschikbaar. Niet ver weg, maar dichtbij. Voor bewoners en hun families is dit een
+                            fundamentele geruststelling.</p>
+                        <h2>Waarom deze keuze?</h2>
+                        <p>Dit model past bij alles waar Erve Meander voor staat: kleinschaligheid, nabijheid en
+                            persoonlijke verantwoordelijkheid. Een zorgondernemer die zijn of haar naam verbindt aan
+                            de kwaliteit van de zorg, heeft een intrinsieke motivatie om het goed te doen.</p>
+                    </article>
+                    <hr class="blog-post-divider">
 
-                            <!-- POST 10 -->
-                            <article class="blog-post-full fade-in" id="post-10">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> April 2026</div>
-                                <h2 class="post-title">Zorg onder één dak: de zorgondernemer</h2>
-                                <p>Na zorgvuldige afweging hebben we een belangrijke keuze gemaakt over hoe de zorg
-                                    op Erve Meander georganiseerd wordt. We kiezen voor een model waarbij een
-                                    zorgondernemer de volledige verantwoordelijkheid draagt voor alles wat zich binnen
-                                    ons huis afspeelt. Een heldere keuze die rust, duidelijkheid en kwaliteit brengt
-                                    — voor bewoners, families én medewerkers.</p>
-                                <h2>Één eindverantwoordelijke</h2>
-                                <p>De zorgondernemer is het hart van de dagelijkse zorgverlening op Erve Meander.
-                                    Hij of zij draagt de volledige verantwoordelijkheid voor de kwaliteit van de
-                                    geboden zorg, de samenstelling en aansturing van het team en alles wat daarmee
-                                    samenhangt. Dat betekent korte lijnen, snelle beslissingen en een aanspreekpunt
-                                    dat echt betrokken is. Geen grote anonieme organisatie, maar iemand die elke
-                                    bewoner bij naam kent.</p>
-                                <h2>Goed personeel, goed georganiseerd</h2>
-                                <p>De zorgondernemer is ook verantwoordelijk voor het aannemen en begeleiden van
-                                    medewerkers. We zoeken mensen die passen bij de cultuur van Erve Meander: warm,
-                                    betrokken en professioneel. Bewoners hebben herkenbare gezichten om zich heen —
-                                    mensen die weten hoe zij in elkaar zitten, wat ze fijn vinden en wat ze nodig
-                                    hebben.</p>
-                                <h2>Altijd iemand beschikbaar — ook 's nachts</h2>
-                                <p>Zorg houdt niet op als de dag voorbij is. Op Erve Meander is ook de nachtzorg
-                                    goed geregeld. Wanneer een bewoner in de nacht hulp nodig heeft — of het nu gaat
-                                    om een praktische vraag, een onrustig moment of acute zorg — is er altijd iemand
-                                    beschikbaar. Niet ver weg, maar dichtbij. Voor bewoners en hun families is dit
-                                    een fundamentele geruststelling: er wordt echt voor hen gezorgd, ook als het
-                                    donker is.</p>
-                                <h2>Waarom deze keuze?</h2>
-                                <p>Dit model past bij alles waar Erve Meander voor staat. Kleinschaligheid, nabijheid
-                                    en persoonlijke verantwoordelijkheid. Een zorgondernemer die zijn of haar naam
-                                    verbindt aan de kwaliteit van de zorg, heeft een intrinsieke motivatie om het
-                                    goed te doen. Dat is een andere dynamiek dan die van een grote zorginstelling met
-                                    meerdere lagen management. En precies die dynamiek willen wij hier voelen.</p>
-                                <p>We zijn blij met deze richting en kijken ernaar uit om hier in de komende maanden
-                                    verdere invulling aan te geven.</p>
-                            </article>
-                            <hr class="blog-post-divider">
+                    <!-- POST 8 -->
+                    <article class="blog-post-full fade-in" id="post-8">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> April 2026</div>
+                        <h2 class="post-title">Wie wonen er straks op Erve Meander?</h2>
+                        <p>Een van de vragen die we in deze fase uitgebreid hebben onderzocht: voor wie is Erve
+                            Meander precies bedoeld? Hoeveel mensen kunnen we op een verantwoorde manier opvangen?
+                            We hebben inmiddels een helder beeld.</p>
+                        <h2>Negen bewoners</h2>
+                        <p>Het beoogde aantal bewoners op Erve Meander is negen. Groot genoeg om een levende,
+                            diverse gemeenschap te vormen — en klein genoeg om iedereen echt te kennen en
+                            persoonlijke aandacht te kunnen geven.</p>
+                        <h2>Zorgzwaarte VG4 tot en met VG6</h2>
+                        <p>De bewoners hebben een zorgvraag die valt binnen de zorgprofielen VG4 tot en met VG6 —
+                            de gehandicaptenzorgprofielen waarbij mensen 24 uur per dag ondersteuning en toezicht
+                            nodig hebben. Binnen deze bandbreedte is ruimte voor mensen met uiteenlopende
+                            ondersteuningsvragen.</p>
+                        <h2>Divers en van alle leeftijden</h2>
+                        <p>We hopen op een gevarieerde groep: mannen en vrouwen, jong en oud. Verschillende
+                            generaties en persoonlijkheden naast elkaar creëren vanzelf een familiesfeer — mensen
+                            die op elkaar letten, van elkaar leren en samen de dag beleven.</p>
+                        <h2>Een gezonde businesscase</h2>
+                        <p>We hebben de businesscase zorgvuldig doorgerekend. Voor negen bewoners met een
+                            zorgprofiel VG4–VG6 is het mogelijk om de juiste zorg te bieden én de organisatie
+                            financieel gezond te houden. Negen is daarmee niet alleen het menselijk optimum —
+                            het is ook het financieel verantwoorde getal.</p>
+                    </article>
+                    <hr class="blog-post-divider">
 
-                            <!-- POST 8 -->
-                            <article class="blog-post-full fade-in" id="post-8">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> April 2026</div>
-                                <h2 class="post-title">Wie wonen er straks op Erve Meander?</h2>
-                                <p>Een van de vragen die we in deze fase uitgebreid hebben onderzocht, is: voor wie
-                                    is Erve Meander precies bedoeld? Hoeveel mensen kunnen we op een verantwoorde
-                                    manier opvangen, en wat betekent dat voor de kwaliteit van de zorg én de
-                                    financiële haalbaarheid? We hebben inmiddels een helder beeld.</p>
-                                <h2>Negen bewoners</h2>
-                                <p>Het beoogde aantal bewoners op Erve Meander is negen. Dit getal is niet
-                                    willekeurig gekozen. Negen mensen is groot genoeg om een levende, diverse
-                                    gemeenschap te vormen — en klein genoeg om iedereen echt te kennen en persoonlijke
-                                    aandacht te kunnen geven. Het is het getal waarop de zorg overzichtelijk, nabij
-                                    en warm blijft.</p>
-                                <h2>Zorgzwaarte VG4 tot en met VG6</h2>
-                                <p>De bewoners van Erve Meander hebben een zorgvraag die valt binnen de
-                                    zorgprofielen VG4 tot en met VG6 — de gehandicaptenzorgprofielen waarbij mensen
-                                    24 uur per dag ondersteuning en toezicht nodig hebben. Binnen deze bandbreedte
-                                    is ruimte voor mensen met uiteenlopende ondersteuningsvragen.</p>
-                                <h2>Divers en van alle leeftijden</h2>
-                                <p>We hopen op een gevarieerde groep: mannen en vrouwen, jong en oud. Diversiteit
-                                    maakt een leefgemeenschap rijker. Verschillende generaties en persoonlijkheden
-                                    naast elkaar creëren vanzelf een familiesfeer — mensen die op elkaar letten,
-                                    van elkaar leren en samen de dag beleven.</p>
-                                <h2>Een gezonde businesscase</h2>
-                                <p>We hebben de businesscase zorgvuldig doorgerekend. Voor negen bewoners met een
-                                    zorgprofiel VG4–VG6 is het mogelijk om de juiste zorg te bieden én de organisatie
-                                    financieel gezond te houden. Negen is daarmee niet alleen het menselijk optimum
-                                    — het is ook het financieel verantwoorde getal.</p>
-                                <p>We zetten alle puzzelstukjes steeds verder op zijn plek. De volgende stap: een
-                                    geschikte locatie vinden die bij dit beeld past.</p>
-                            </article>
-                            <hr class="blog-post-divider">
+                    <!-- POST 1 -->
+                    <article class="blog-post-full fade-in" id="post-1">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Maart 2026</div>
+                        <h2 class="post-title">Oriëntatiefase &amp; Terrein</h2>
+                        <p>We zijn nu in de oriëntatiefase en oriënteren ons breed op de toekomst van Erve
+                            Meander.</p>
+                        <p>Op dit moment zijn we heel druk op zoek naar een mooi, geschikt stuk grond. We zoeken
+                            een locatie waar de natuurlijke omgeving de ruimte krijgt en waar we echt dat
+                            'meanderende', rustige gevoel kunnen creëren. Zodra we een kavel in het vizier hebben,
+                            gaan we de landschapsarchitectuur en het bouwplan daar naadloos op laten aansluiten.</p>
+                    </article>
+                    <hr class="blog-post-divider">
 
-                            <!-- POST 1 -->
-                            <article class="blog-post-full fade-in" id="post-1">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Maart 2026</div>
-                                <h2 class="post-title">Oriëntatiefase &amp; Terrein</h2>
-                                <p>We zijn nu in de oriëntatiefase en oriënteren ons breed op de toekomst van Erve
-                                    Meander.</p>
-                                <p>Op dit moment zijn we heel druk op zoek naar een mooi, geschikt stuk grond. We
-                                    zoeken een locatie waar de natuurlijke omgeving de ruimte krijgt en waar we echt
-                                    dat 'meanderende', rustige gevoel kunnen creëren. Zodra we een kavel in het
-                                    vizier hebben, gaan we de landschapsarchitectuur en het bouwplan daar naadloos
-                                    op laten aansluiten.</p>
-                            </article>
-                            <hr class="blog-post-divider">
+                    <!-- POST 7 -->
+                    <article class="blog-post-full fade-in" id="post-7">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> December 2025</div>
+                        <h2 class="post-title">Het besluit is gevallen: we gaan het doen</h2>
+                        <p>December 2025 markeert een mijlpaal. Na maanden van nadenken, verkennen en afwegen is
+                            het besluit definitief: Erve Meander gaat er komen. Het volledige traject wordt
+                            opgestart — van locatiezoektocht en vergunningen tot zorgpartners en bouwplannen.
+                            Er is geen weg meer terug, en dat voelt goed.</p>
+                        <p>Dit besluit is niet lichtzinnig genomen. We hebben goed nagedacht over wat het vraagt:
+                            tijd, doorzettingsvermogen, samenwerking en een langetermijnvisie. Maar juist omdat we
+                            zo diep overtuigd zijn van de noodzaak en de waarde van dit initiatief, voelt het
+                            moment van definitief commitment niet als een last — het voelt als bevrijding.</p>
+                        <p>De komende periode worden de eerste concrete stappen gezet. We gaan op zoek naar de
+                            juiste locatie, verkennen mogelijke zorgpartners en werken verder aan de financiële
+                            en juridische kaders. Stap voor stap bouwen we toe naar een plek die er echt toe doet.</p>
+                        <p>Wilt u dit traject van dichtbij volgen? Neem dan contact met ons op via het formulier
+                            onderaan de pagina. We delen elke stap die we zetten.</p>
+                    </article>
+                    <hr class="blog-post-divider">
 
-                            <!-- POST 7 -->
-                            <article class="blog-post-full fade-in" id="post-7">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> December 2025</div>
-                                <h2 class="post-title">Het besluit is gevallen: we gaan het doen</h2>
-                                <p>December 2025 markeert een mijlpaal. Na maanden van nadenken, verkennen en afwegen
-                                    is het besluit definitief: Erve Meander gaat er komen. Het volledige traject
-                                    wordt opgestart — van locatiezoektocht en vergunningen tot zorgpartners en
-                                    bouwplannen. Er is geen weg meer terug, en dat voelt goed.</p>
-                                <p>Dit besluit is niet lichtzinnig genomen. We hebben goed nagedacht over wat het
-                                    vraagt: tijd, doorzettingsvermogen, samenwerking en een langetermijnvisie. Maar
-                                    juist omdat we zo diep overtuigd zijn van de noodzaak en de waarde van dit
-                                    initiatief, voelt het moment van definitief commitment niet als een last — het
-                                    voelt als bevrijding. Eindelijk kunnen we voluit gaan.</p>
-                                <p>De komende periode worden de eerste concrete stappen gezet. We gaan op zoek naar
-                                    de juiste locatie, verkennen mogelijke zorgpartners en werken verder aan de
-                                    financiële en juridische kaders. Stap voor stap bouwen we toe naar een plek die
-                                    er echt toe doet: voor bewoners, voor families en voor de mensen die er straks
-                                    met plezier hun werk doen.</p>
-                                <p>Wilt u dit traject van dichtbij volgen? Neem dan contact met ons op via het
-                                    formulier onderaan de pagina. We delen elke stap die we zetten.</p>
-                            </article>
-                            <hr class="blog-post-divider">
+                    <!-- POST 6 -->
+                    <article class="blog-post-full fade-in" id="post-6">
+                        <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Oktober 2025</div>
+                        <h2 class="post-title">Het voornemen: kleinschalige zorg met hart</h2>
+                        <p>In oktober 2025 is het idee voor Erve Meander officieel een voornemen geworden. Een
+                            kleinschalig, duurzaam zorg-initiatief in het buitengebied van Hellendoorn — voor
+                            circa negen bewoners die een veilige, warme en geborgen thuisbasis verdienen.</p>
+                        <h2>Waarom dit initiatief?</h2>
+                        <p>De drijfveer achter Erve Meander is een diepgewortelde overtuiging: zorg kan beter.
+                            Niet groter, maar juist kleiner. Niet verder weg, maar dichterbij. In de grote zorg
+                            zijn de lijnen lang, de processen log en de ruimte voor aandacht beperkt. Wij geloven
+                            dat kortere lijntjes en daadkracht het verschil maken.</p>
+                        <h2>Een thuis, geen instelling</h2>
+                        <p>Voor bewoners betekent Erve Meander een fijn huis waar zij 24 uur per dag, zeven dagen
+                            per week kunnen rekenen op nabijheid, aandacht en veiligheid. Geen gang met deuren,
+                            maar een erf met leven. Een plek waar iedereen zich gezien voelt.</p>
+                        <h2>Ruimte voor medewerkers</h2>
+                        <p>Goede zorg begint bij mensen die zichzelf kunnen zijn in hun werk. Bij Erve Meander
+                            willen we medewerkers de ruimte geven om zich te ontplooien, hun eigen kracht en
+                            talenten in te zetten — en ze de tijd geven die zorg werkelijk vraagt. Een harmonieus
+                            team dat trots is op wat het doet en oprecht betrokken is bij de bewoners.</p>
+                        <p>Dit voornemen is het begin. De stappen die volgen, leest u hier in de komende maanden
+                            terug.</p>
+                    </article>
 
-                            <!-- POST 6 -->
-                            <article class="blog-post-full fade-in" id="post-6">
-                                <div class="blog-article-date"><i class="fas fa-calendar-alt"></i> Oktober 2025</div>
-                                <h2 class="post-title">Het voornemen: kleinschalige zorg met hart</h2>
-                                <p>In oktober 2025 is het idee voor Erve Meander officieel een voornemen geworden.
-                                    Een kleinschalig, duurzaam zorg-initiatief in het buitengebied van Hellendoorn
-                                    — voor circa negen bewoners die een veilige, warme en geborgen thuisbasis
-                                    verdienen.</p>
-                                <h2>Waarom dit initiatief?</h2>
-                                <p>De drijfveer achter Erve Meander is een diepgewortelde overtuiging: zorg kan
-                                    beter. Niet groter, maar juist kleiner. Niet verder weg, maar dichterbij. In de
-                                    grote zorg zijn de lijnen lang, de processen log en de ruimte voor aandacht
-                                    beperkt. Wij geloven dat kortere lijntjes en daadkracht het verschil maken —
-                                    dat je met een overzichtelijke, betrokken organisatie veel meer kunt betekenen
-                                    voor de mensen die je zorg nodig hebben.</p>
-                                <h2>Een thuis, geen instelling</h2>
-                                <p>Voor bewoners betekent Erve Meander een fijn huis waar zij 24 uur per dag, zeven
-                                    dagen per week kunnen rekenen op nabijheid, aandacht en veiligheid. Geen gang
-                                    met deuren, maar een erf met leven. Een plek waar de dag er anders uitziet voor
-                                    iedereen, maar waar iedereen zich gezien voelt.</p>
-                                <h2>Ruimte voor medewerkers</h2>
-                                <p>Goede zorg begint bij mensen die zichzelf kunnen zijn in hun werk. Bij Erve
-                                    Meander willen we medewerkers de ruimte geven om zich te ontplooien — om hun
-                                    eigen kracht en talenten in te zetten. En ze de tijd geven die zorg werkelijk
-                                    vraagt. Geen haast, geen overvolle roosters. Een harmonieus team dat trots is op
-                                    wat het doet en oprecht betrokken is bij de bewoners.</p>
-                                <p>Dit voornemen is het begin. De stappen die volgen, leest u hier in de komende
-                                    maanden terug.</p>
-                            </article>
-
-                        </div><!-- einde blog-posts-main -->
-
-                        <!-- ===== ZIJBALK ===== -->
-                        <aside class="blog-sidebar">
-                            <p class="blog-sidebar-heading">Alle updates</p>
-                            <ul class="blog-sidebar-list">
-                                <li>
-                                    <a href="#post-11">
-                                        <span class="sidebar-date">Juni 2026</span>
-                                        Wat een respons — we zijn overweldigd!
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#post-9">
-                                        <span class="sidebar-date">Juni 2026</span>
-                                        Aan tafel met de gemeente
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#post-5">
-                                        <span class="sidebar-date">Mei 2026</span>
-                                        Een zorgorganisatie als partner
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#post-4">
-                                        <span class="sidebar-date">Mei 2026</span>
-                                        Op zoek naar de juiste locatie
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#post-10">
-                                        <span class="sidebar-date">April 2026</span>
-                                        Zorg onder één dak: de zorgondernemer
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#post-8">
-                                        <span class="sidebar-date">April 2026</span>
-                                        Wie wonen er straks op Erve Meander?
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#post-1">
-                                        <span class="sidebar-date">Maart 2026</span>
-                                        Oriëntatiefase &amp; Terrein
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#post-7">
-                                        <span class="sidebar-date">December 2025</span>
-                                        Het besluit is gevallen: we gaan het doen
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#post-6">
-                                        <span class="sidebar-date">Oktober 2025</span>
-                                        Het voornemen: kleinschalige zorg met hart
-                                    </a>
-                                </li>
-                            </ul>
-                        </aside>
-
-                    </div><!-- einde blog-page-layout -->
-                </div><!-- einde blog-page-container -->
+                </div><!-- einde meander-content -->
             </section>
 
             <hr class="sketchy-divider">
