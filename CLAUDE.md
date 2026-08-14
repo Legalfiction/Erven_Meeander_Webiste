@@ -101,3 +101,21 @@ Vercel deployt automatisch binnen ~60 seconden.
     --meander-width:     1000px;
 }
 ```
+
+## Kaartendienst-koppeling (2026-08-14)
+
+Dit project is aangesloten op de gedeelde Kaartendienst: `scripts/stuur-kaart.mjs` schrijft een
+kaart-JSON naar `G:\Mijn Drive\Kaarten-Postbus` (`project: "ervemeander"`), die dienst pikt het
+bestand op en stuurt het als bericht met knoppen naar Aldo's Telegram, gebundeld in de groep
+"Zorg & Dossiers" (ochtendvenster 07:30, zie `Projecten\Kaartendienst\scripts\project-categorieen.mjs`).
+
+- Schema en spelregels: `G:\Mijn Drive\Kaarten-Postbus\LEESMIJ.md` (canonieke bron, niet hier
+  dupliceren).
+- Gebruik: `node scripts/stuur-kaart.mjs` stuurt de ingebouwde `INHOUD` in het script; die moet
+  vóór elke nieuwe run bijgewerkt worden met verse kernfeiten (het script verzint zelf niets),
+  of geef `--inhoud pad-naar-json.json` mee met een los samengesteld bestand.
+- Antwoorden van Aldo komen terug als `antwoord-ervemeander-<tijdstempel>.json` in dezelfde
+  postbusmap.
+- Eerste kaart verstuurd op 2026-08-14: `kaart-ervemeander-20260814-1424.json`. Dit project raakt
+  Telegram zelf nooit aan, geen token of chat-id nodig in dit project.
+```
