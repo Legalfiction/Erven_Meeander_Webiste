@@ -23,8 +23,8 @@ De website is functioneel en live op `www.ervemeander.nl`. Pioniersfase project 
 
 ### Fase 2 — Functionaliteit
 - [ ] Google Analytics of Plausible toevoegen (privacyvriendelijk)
-- [ ] Open Graph meta-tags voor social media previews
-- [ ] Sitemap.xml toevoegen
+- [x] Open Graph meta-tags voor social media previews (2026-09-05, regie-item 372)
+- [x] Sitemap.xml toevoegen (2026-09-05, plus robots.txt en canonical-tags)
 - [ ] "Vrienden van Erve Meander" donateurslijst uitbreiden
 
 ### Fase 3 — Toekomstig (richting opening 2027/2028)
