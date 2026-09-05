@@ -5,3 +5,4 @@
 *.env.save
 node_modules/
 dist/
+logs/

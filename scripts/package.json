@@ -1,0 +1,8 @@
+{
+  "name": "ervemeander-scripts",
+  "private": true,
+  "description": "Alleen de afhankelijkheid van scripts/regie-melden.mjs en scripts/zet-status.mjs. Bewust in scripts/ en niet in de projectroot: Vercel deployt de root als statische site en een package.json in de root zou het bouwgedrag van Vercel veranderen.",
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}

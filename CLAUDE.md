@@ -19,9 +19,12 @@ Informatiewebsite voor een kleinschalig, duurzaam zorg-erf in de regio Hellendoo
 
 ```
 index.html          ← hoofdpagina (alle secties)
-blog1.html          ← Blog: Voorbereidingen Bouwfase
-blog2.html          ← Blog: [artikel 2]
-blog3.html          ← Blog: [artikel 3]
+blog.html           ← Blog: alle berichten op één pagina, met ankers #post-N (de enige gelinkte blogpagina)
+blog1.html, blog4.html t/m blog11.html
+                    ← losse artikelpagina's, nergens meer gelinkt; canonical wijst naar blog.html
+sitemap.xml         ← sitemap voor zoekmachines (alleen / en /blog.html); lastmod bijwerken bij inhoudswijziging
+robots.txt          ← verwijst naar de sitemap
+og-image.jpg        ← 1200x630 voorvertoning voor delen (Open Graph/Twitter), gemaakt uit huis.jpg + logo.png
 styles.css          ← alle opmaak (CSS variabelen in :root)
 script.js           ← scroll-animaties, sticky header, FAQ accordion, formulier
 logo.png            ← Erve Meander logo
@@ -33,8 +36,14 @@ farm_tree_pine.png  ← decoratief element (dennenboom)
 cheerful_diverse_people.png ← foto bewoners/mensen
 copy_images.py      ← hulpscript: kopieert AI-afbeeldingen naar projectmap
 remove_bg.py        ← hulpscript: verwijdert achtergrond van afbeeldingen
+scripts/            ← regie-melden.mjs + zet-status.mjs (kopieën uit regie), eigen package.json (alleen dotenv)
 backup_old/         ← oude versie (niet deployen)
 ```
+
+**Waarom `scripts/package.json` en niet een `package.json` in de root:** Vercel deployt de root
+als statische site zonder build. Een `package.json` in de root zou Vercel een `npm install` en
+een frameworkdetectie laten doen, en dat raakt de live site. Node vindt `scripts/node_modules`
+via de gewone module-resolutie vanuit `scripts/*.mjs`. Installeren: `cd scripts && npm install`.
 
 ## Secties in index.html
 
@@ -46,7 +55,7 @@ backup_old/         ← oude versie (niet deployen)
 | De Omgeving | `#community` | Natuur, buurtschap |
 | FAQ | `#faq` | Accordion met veelgestelde vragen |
 | Vrienden van | `#vrienden` | Donateurs/vrienden sectie |
-| Blog | `#blog` | Links naar blog1/2/3.html |
+| Blog | `#blog` | Uittreksels met links naar blog.html#post-N |
 | Contact | `#contact` | Formulier (Web3Forms) |
 
 ## Design
@@ -102,20 +111,27 @@ Vercel deployt automatisch binnen ~60 seconden.
 }
 ```
 
-## Kaartendienst-koppeling (2026-08-14)
+## Kaarten naar Aldo: via regie (sinds 2026-09-05)
 
-Dit project is aangesloten op de gedeelde Kaartendienst: `scripts/stuur-kaart.mjs` schrijft een
-kaart-JSON naar `G:\Mijn Drive\Kaarten-Postbus` (`project: "ervemeander"`), die dienst pikt het
-bestand op en stuurt het als bericht met knoppen naar Aldo's Telegram, gebundeld in de groep
-"Zorg & Dossiers" (ochtendvenster 07:30, zie `Projecten\Kaartendienst\scripts\project-categorieen.mjs`).
+Kaarten met een vraag, voorstel of fout gaan via regie.barkr.nl, met de eigen `REGIE_SLEUTEL`
+uit `.env` (aangemaakt 2026-09-05, zie `STANDAARDEN\SECRETS-REGISTER.md`). Aldo besloot op
+2 september 2026 (regie-item 357) dat kaarten alleen nog via regie gaan; de oude route via de
+Kaarten-Postbus wordt niet meer gebruikt.
 
-- Schema en spelregels: `G:\Mijn Drive\Kaarten-Postbus\LEESMIJ.md` (canonieke bron, niet hier
-  dupliceren).
-- Gebruik: `node scripts/stuur-kaart.mjs` stuurt de ingebouwde `INHOUD` in het script; die moet
-  vóór elke nieuwe run bijgewerkt worden met verse kernfeiten (het script verzint zelf niets),
-  of geef `--inhoud pad-naar-json.json` mee met een los samengesteld bestand.
-- Antwoorden van Aldo komen terug als `antwoord-ervemeander-<tijdstempel>.json` in dezelfde
-  postbusmap.
-- Eerste kaart verstuurd op 2026-08-14: `kaart-ervemeander-20260814-1424.json`. Dit project raakt
-  Telegram zelf nooit aan, geen token of chat-id nodig in dit project.
+- Kaart sturen: `node scripts/regie-melden.mjs item --type vraag|voorstel|fout|actie --titel "..."
+  --context "..." --advies "..." --opties "a|b" --voorkeur 1`. Minimaal twee keuzes plus een
+  voorkeur, of `--geen-keuze "..."` als er echt niets te kiezen valt.
+- Status peilen: `node scripts/regie-melden.mjs status <id>`. Doorzetten na uitvoering:
+  `node scripts/zet-status.mjs <id> uitgevoerd "<wat er gedaan is>"` en daarna `afgerond`.
+- `scripts/regie-melden.mjs` en `scripts/zet-status.mjs` zijn ongewijzigde kopieën uit
+  `Projecten\regie\scripts\`. Een fout daarin wordt daar hersteld en opnieuw gekopieerd, nooit in
+  de kopie. Ze hebben `dotenv` nodig: `cd scripts && npm install` (zie Bestandsstructuur).
+- Eerste kaart via regie: 2026-09-05, op verzoek van Alex (postbus `NAAR-ervemeander-2026-09-05-1726.md`).
+
+### Oude route (Kaartendienst, 2026-08-14 t/m 2026-09-05)
+
+`scripts/stuur-kaart.mjs` schreef een kaart-JSON naar `G:\Mijn Drive\Kaarten-Postbus`
+(`project: "ervemeander"`); de Kaartendienst zette dat om in een Telegram-bericht. Eerste en enige
+kaart langs die weg: `kaart-ervemeander-20260814-1424.json`. Het script staat er nog (verwijderen
+pas als de regie-route bewezen werkt, besluit 14 in regie), maar wordt niet meer aangeroepen.
 ```
