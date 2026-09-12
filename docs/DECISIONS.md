@@ -4,6 +4,23 @@ Architectuurbeslissingen en de motivatie erachter. Nieuwste bovenaan.
 
 ---
 
+## 2026-09-10 — Vercel Web Analytics als bezoekersstatistiek, geen Google Analytics of Plausible
+
+**Besluit.** Bezoekersstatistiek loopt via Vercel Web Analytics: één `<script>`-tag
+(`/_vercel/insights/script.js`) op `index.html` en `blog.html`. Geen nieuwe accounts, geen
+nieuwe afhankelijkheid.
+
+**Waarom.** Aldo koos op kaart 477 voor "eerst privacyvriendelijke bezoekersstatistiek, blog
+later". Vercel Web Analytics is cookieloos en verzamelt geen persoonsgegevens, dus geen
+toestemmingsbanner nodig, en de site draait al op Vercel: geen nieuw account, geen nieuwe
+sleutel. Google Analytics (genoemd in PLAN.md) gebruikt cookies en is niet privacyvriendelijk.
+Plausible en vergelijkbare diensten (GoatCounter, Cloudflare Web Analytics) vereisen een nieuw
+account of een site-sleutel die een sessie zonder Aldo niet mag aanmaken.
+
+**Openstaand.** Web Analytics moet nog in het Vercel-dashboard voor dit project aangezet
+worden (een schakelaar, geen sleutel) voor er data binnenkomt. Dat gebeurt niet vanuit deze
+sessie.
+
 ## 2026-09-05 — Kaarten naar Aldo via regie, niet meer via de Kaarten-Postbus
 
 **Besluit.** Dit project stuurt kaarten met vragen en voorstellen via regie.barkr.nl

@@ -22,7 +22,7 @@ De website is functioneel en live op `www.ervemeander.nl`. Pioniersfase project 
 - [ ] `cheerful_diverse_people.png` vervangen door authentieke bewonersfoto
 
 ### Fase 2 — Functionaliteit
-- [ ] Google Analytics of Plausible toevoegen (privacyvriendelijk)
+- [x] Privacyvriendelijke bezoekersstatistiek toevoegen (2026-09-10, Vercel Web Analytics, regie-item 477), dashboard-toggle nog open, zie CHANGELOG
 - [x] Open Graph meta-tags voor social media previews (2026-09-05, regie-item 372)
 - [x] Sitemap.xml toevoegen (2026-09-05, plus robots.txt en canonical-tags)
 - [ ] "Vrienden van Erve Meander" donateurslijst uitbreiden

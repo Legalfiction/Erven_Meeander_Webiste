@@ -5,6 +5,17 @@ Formaat losjes gebaseerd op [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### 2026-09-10
+
+- **Privacyvriendelijke bezoekersstatistiek**: Vercel Web Analytics toegevoegd aan `index.html`
+  en `blog.html` (`<script defer src="/_vercel/insights/script.js"></script>`). Cookieloos, geen
+  persoonsgegevens, dus geen toestemmingsbanner nodig. Er komt pas data binnen zodra Web
+  Analytics in het Vercel-dashboard voor dit project aangezet is; dat is een handmatige stap
+  voor Aldo. Uitvoering van regie-item 477 (antwoord Aldo, 5 september 2026).
+  De losse artikelpagina's (`blog1.html`, `blog4.html` t/m `blog11.html`) zijn bewust overgeslagen:
+  ze zijn nergens meer gelinkt en de sitemap noemt ze niet (zie DECISIONS.md 2026-09-05).
+- Blogbericht met de stand van zaken blijft uit tot dit deel af is (zo koos Aldo op de kaart).
+
 ### 2026-09-05
 
 - **Open Graph en Twitter-tags** op `index.html` en `blog.html`, met een nieuwe `og-image.jpg`
