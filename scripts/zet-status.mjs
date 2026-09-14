@@ -28,7 +28,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-laadEnv({ path: join(__dirname, '..', '.env') });
+laadEnv({ path: join(__dirname, '..', '.env'), quiet: true });
 
 // Alleen de overgangen die de statusmachine aan een agent toestaat. Staat hier
 // nog een keer los van de server: een typefout hoort hier te stranden en niet als
@@ -71,12 +71,19 @@ if (!respons.ok) {
     const tweedeTekst = await tweede.text();
     if (!tweede.ok) {
       console.error(`regie gaf ${tweede.status} op /afhandelen: ${tweedeTekst.slice(0, 300)}`);
-      process.exit(1);
+      process.exitCode = 1;
+    } else {
+      console.log(`#${id} -> uitgevoerd (via /afhandelen)`);
     }
-    console.log(`#${id} -> uitgevoerd (via /afhandelen)`);
-    process.exit(0);
+  } else {
+    console.error(`regie gaf ${respons.status}: ${tekst.slice(0, 300)}`);
+    if (tekst.includes('overgang') && status === 'afgerond') {
+      console.error('Tip: de statusmachine kent geen sprong van beantwoord naar afgerond.');
+      console.error('Zet het item eerst op uitgevoerd, en daarna in dezelfde beurt op afgerond,');
+      console.error('zodat de bewaker er geen controlekaart voor Aldo van kan maken.');
+    }
+    process.exitCode = 1;
   }
-  console.error(`regie gaf ${respons.status}: ${tekst.slice(0, 300)}`);
-  process.exit(1);
+} else {
+  console.log(`#${id} -> ${status}`);
 }
-console.log(`#${id} -> ${status}`);

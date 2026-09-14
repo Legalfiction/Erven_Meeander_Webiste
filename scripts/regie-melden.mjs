@@ -8,9 +8,12 @@
 // dan opnieuw. Bewust NIET "stuur-kaart.mjs" genoemd: bijna elk producerend
 // project heeft al een eigen scripts/stuur-kaart.mjs dat naar de oude
 // Kaarten-Postbus schrijft (writeFileSync) — een kopie onder die naam zou dat
-// bestand stil overschrijven. Geen gedeeld npm-pakket nodig: het bestand is
-// bewust klein en dependency-vrij (naast dotenv) zodat er weinig te laten
-// driften valt.
+// bestand stil overschrijven. Geen gedeeld npm-pakket: het bestand is bewust
+// klein en dependency-vrij (naast dotenv), maar dat voorkomt kopie-drift niet
+// vanzelf — de sha256-controle van 14-09-2026 vond acht kopieën die sinds
+// begin september stilzwijgend achterliepen (zie doorwerklog.md, blok
+// 14-09-2026). Alleen een controlescript dat drift zichtbaar maakt houdt dit
+// bestand en zijn kopieën gelijk.
 //
 // Leest REGIE_SLEUTEL (verplicht) en REGIE_URL (optioneel, default
 // https://regie.barkr.nl) uit de .env van het aanroepende project. De sleutel
@@ -405,6 +408,12 @@ const CONCEPT_JA = ['true', 'ja', '1'];
 const CONCEPT_NEE = ['false', 'nee', '0'];
 const STAND_SOORTEN = ['project', 'dossier', 'taak'];
 const TOESTANDEN = ['loopt', 'wacht', 'storing', 'klaar'];
+// Moet gelijk blijven aan TYPEN in src/item-validatie.ts: de server valideert
+// dit zelf al, maar zonder deze klantzijdige spiegel stuit een typefout pas na
+// de netwerkaanroep op een 400 in plaats van meteen lokaal (regie-item, vondst
+// 14-09-2026 in doorwerklog.md). test/regie-melden.test.mjs pint beide lijsten
+// tegen elkaar zodat ze niet los van elkaar kunnen driften.
+export const TYPEN = ['vraag', 'actie', 'fout', 'onduidelijkheid', 'voorstel'];
 
 // Vlagparser, fail-closed. Een onbekende vlag, een los woord op een vlagpositie
 // of een vlag zonder waarde stopt het script met een duidelijke fout, in plaats
@@ -497,6 +506,15 @@ async function cli() {
           `--${naam} moet ${CONCEPT_JA.join('/')} of ${CONCEPT_NEE.join('/')} zijn, kreeg "${velden[naam]}".`,
         );
       }
+    }
+    // Zelfde lijn als --soort en --toestand hierboven: fail-closed hier op de
+    // CLI, vóór het item verstuurd wordt. stuurItem() zelf waarschuwt bewust in
+    // plaats van te gooien (zie de comment daar), want die functie wordt ook
+    // rechtstreeks door nachttaken en hooks aangeroepen die niet mogen stranden.
+    // Vóór de keuzecontrole hieronder: een fout type is de eerst te melden fout,
+    // anders krijgt iemand met een tikfout in --type de opties-klacht te zien.
+    if (velden.type && !TYPEN.includes(velden.type)) {
+      throw new Error(`--type moet een van ${TYPEN.join(', ')} zijn, kreeg "${velden.type}".`);
     }
     // Hier wél weigeren in plaats van waarschuwen: op deze route zit een sessie
     // aan de knoppen, en die kan de kaart meteen fatsoenlijk maken. Er gaat niets
