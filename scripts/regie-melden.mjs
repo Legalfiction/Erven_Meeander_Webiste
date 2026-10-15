@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+// NIET BEWERKEN IN EEN KOPIE. Dit bestand is op elke plek byte-voor-byte hetzelfde als
+// regie/scripts/regie-melden.mjs (de enige bron). Wijzig het alleen daar en verspreid het met
+// `node scripts/kopie-verspreiden.mjs --toepassen` (vanuit regie); een afwijkende kopie
+// wordt overschreven en de test test/regie-melden-kopieen.test.mjs faalt erop.
+//
 // Canonieke producent-helper voor regie.barkr.nl (fase 2, Control Tower-plan,
 // ontwerpeis "elke producent leest de regie-sleutel zelf uit de eigen .env").
 //
@@ -38,6 +43,8 @@
 //   node scripts/regie-melden.mjs pensioen <job> --reden "deze job bestaat niet meer omdat ..."
 //   node scripts/regie-melden.mjs aanvulling <item-id> "<wat er intussen al bekend of gebeurd is>"
 //   node scripts/regie-melden.mjs status <item-id>
+//   node scripts/regie-melden.mjs herstel <item-id> --json '{"uitkomst":"deels","gedaan":"...","nog_te_doen":[],"voor_aldo":null}'
+//   node scripts/regie-melden.mjs niet-uitgevoerd <item-id> "<waarom deze beantwoorde kaart niet uitgevoerd is>"
 //
 // Een bestaand item op een volgende status zetten hoort hier niet thuis: daar is
 // scripts/zet-status.mjs voor, dat de toelichting verplicht stelt en alleen de
@@ -303,9 +310,21 @@ export function controleerKeuzes({ opties, voorkeur, geenKeuze }) {
   return null;
 }
 
+// UITSTELOPTIE (Aldo, regie-item 308, 05-10-2026). Elke kaart met keuzes houdt als
+// laatste keuze "Uitstellen", zodat Aldo een punt kan laten rusten zonder iets te
+// beslissen. Zo werkte het eerder ook. Hij komt achteraan, dus `voorkeur` blijft
+// kloppen, en wordt niet dubbel gezet als de melder zelf al een uitstelkeuze noemt.
+export const UITSTELOPTIE = 'Uitstellen, later opnieuw voorleggen';
+
+export function metUitstelOptie(opties) {
+  if (!Array.isArray(opties) || opties.length < 2) return opties;
+  if (opties.some((o) => /uitstel/i.test(String(o)))) return opties;
+  return [...opties, UITSTELOPTIE];
+}
+
 // type: vraag | actie | fout | onduidelijkheid | voorstel. advies is verplicht (A10).
 // contextcheck: standaard aan, zie het blok CONTEXTCHECK hierboven.
-export async function stuurItem({ type, titel, context, advies, adviesrol, opties, voorkeur, label, concept, geenKeuze, contextcheck = true }) {
+export async function stuurItem({ type, titel, context, advies, adviesrol, opties, voorkeur, label, concept, geenKeuze, vervolg, op, contextcheck = true, actieAldo }) {
   // Bewust een waarschuwing en geen fout op deze route. De automatische melders
   // (nachtjobs, hooks) roepen stuurItem rechtstreeks aan; gooien zou hun melding
   // laten verdampen, en een verdwenen storingsmelding is erger dan een kale kaart.
@@ -332,7 +351,10 @@ export async function stuurItem({ type, titel, context, advies, adviesrol, optie
       console.error(`contextcheck: overgeslagen, ${fout?.message ?? fout}`);
     }
   }
-  return post('/api/items', { type, titel, context, advies, adviesrol, opties, voorkeur, label, concept });
+  // op: herinnering op datum (JJJJ-MM-DD, 9 oktober 2026). De kaart wacht in regie tot die
+  // dag (in het weekend de vrijdag ervoor) en staat tot dan in de agenda op projecten.barkr.nl.
+  // Storingskaarten (geenKeuze) hebben geen opties en blijven zonder uitstelknop.
+  return post('/api/items', { type, titel, context, advies, adviesrol, opties: geenKeuze ? opties : metUitstelOptie(opties), voorkeur, label, concept, vervolg, actie_aldo: actieAldo, op_datum: op });
 }
 
 // Eén regel "Mogelijk al bekend" toevoegen aan een kaart die nog niet verstuurd
@@ -352,6 +374,85 @@ export async function stuurAanvulling(id, tekst) {
     throw new Error(`item-id moet een positief geheel getal zijn, kreeg "${id}".`);
   }
   return post(`/api/items/${nummer}/aanvulling`, { tekst });
+}
+
+// Het verslag van een herstelpoging op een storing (v97, 09-10-2026). Regie
+// bouwt daar het dossier uit dat Aldo op Storingen en in de agenda ziet: wat er
+// gedaan is, wat nog moet, en welke stap van hem verwacht wordt. Alleen in deze
+// kopie (Tweede brein), want alleen de foutronde van dit project gebruikt het.
+// Regie weigert met 409 een kaart die geen openstaande storing is, en met 422
+// een verslag over een afgeschermd domein (A8).
+export async function stuurHerstel(id, herstel) {
+  const nummer = Number(id);
+  if (!Number.isInteger(nummer) || nummer < 1) {
+    throw new Error(`item-id moet een positief geheel getal zijn, kreeg "${id}".`);
+  }
+  const h = herstel ?? {};
+  const body = {
+    // 'wacht-op-kaart' (14-10-2026): de poging wacht op een antwoord van Aldo op een
+    // kaart. Regie kent die uitkomst sinds v73b (gedeployd 14-10-2026, fea5230) en
+    // eist er minstens één kaartnummer bij; de tijdelijke vertaling naar 'deels'
+    // is dezelfde avond weggehaald.
+    uitkomst: h.uitkomst,
+    gedaan: h.gedaan,
+    nog_te_doen: Array.isArray(h.nog_te_doen) ? h.nog_te_doen : [],
+    voor_aldo: h.voor_aldo ?? null,
+    zelf_oplossen: Array.isArray(h.zelf_oplossen) ? h.zelf_oplossen : [],
+  };
+  // Kaarten waarop dit herstel wacht (14-10-2026). Alleen meesturen als er zijn,
+  // zodat een gewoon verslag byte voor byte gelijk blijft. Regie toont ze onder
+  // Storingen als "Wacht op je antwoord op kaart #N" en geeft de storing een nieuwe
+  // kans zodra al die kaarten beantwoord zijn.
+  // `vraag` en `weggelaten` zijn voor de foutronde zelf en gaan niet mee.
+  if (Array.isArray(h.wacht_op_kaarten) && h.wacht_op_kaarten.length) {
+    body.wacht_op_kaarten = h.wacht_op_kaarten;
+  }
+  return post(`/api/items/${nummer}/herstel`, body);
+}
+
+// Een beantwoorde kaart kon niet uitgevoerd worden (v20, 04-10-2026). Regie
+// legt de reden vast en stuurt Aldo binnen twee minuten een melding, gebundeld
+// per oorzaak; de kaart blijft op 'beantwoord' staan. Elk project mag dit voor
+// elke kaart melden. Dezelfde reden nog eens melden geeft geen tweede melding.
+export async function stuurNietUitgevoerd(id, reden) {
+  const nummer = Number(id);
+  if (!Number.isInteger(nummer) || nummer < 1) {
+    throw new Error(`item-id moet een positief geheel getal zijn, kreeg "${id}".`);
+  }
+  return post(`/api/items/${nummer}/niet-uitgevoerd`, { reden });
+}
+
+// De uitvoerwachter start een sessie voor een beantwoorde kaart (v51). Regie zet
+// het antwoord op in_uitvoering en telt de poging; 404 of 409 betekent dat er
+// niets te starten valt (al bezig, niet beantwoord door Aldo). Gooit dan een
+// fout met de statuscode erin, zodat de wachter geen sessie start.
+export async function stuurUitvoeringGestart(id) {
+  const nummer = Number(id);
+  if (!Number.isInteger(nummer) || nummer < 1) {
+    throw new Error(`item-id moet een positief geheel getal zijn, kreeg "${id}".`);
+  }
+  return post(`/api/items/${nummer}/uitvoering-gestart`, {});
+}
+
+export async function stuurUitvoeringAfgelast(id) {
+  const nummer = Number(id);
+  if (!Number.isInteger(nummer) || nummer < 1) {
+    throw new Error(`item-id moet een positief geheel getal zijn, kreeg "${id}".`);
+  }
+  return post(`/api/items/${nummer}/uitvoering-afgelast`, {});
+}
+
+// Markeer een eigen item voor het aanspreken-mechanisme (aanspreekregels.ts):
+// voorrang binnen de bestaande REGIE_MAX_VOORGELEGD-sleuven en een kortere
+// herinneringsladder. Alleen zolang het item nog op 'klaar' staat (nog niet
+// voorgelegd), en alleen voor items van het eigen project. Idempotent: een
+// item dat al gemarkeerd is geeft gewoon 200 terug.
+export async function stuurAanspreken(id) {
+  const nummer = Number(id);
+  if (!Number.isInteger(nummer) || nummer < 1) {
+    throw new Error(`item-id moet een positief geheel getal zijn, kreeg "${id}".`);
+  }
+  return post(`/api/items/${nummer}/aanspreken`, {});
 }
 
 // uitkomst/omschrijving/soort zijn alle drie optioneel (bouwstap 3, besluit 18 in
@@ -399,8 +500,25 @@ export async function stuurMetPensioen(job, reden) {
   return post(`/api/hartslag/${encodeURIComponent(job)}/pensioen`, { reden });
 }
 
+// Uitleg bij een vraag op de werkplek (v93). Alleen voor scripts/werkplek-uitleg.mjs:
+// ophalen wat nog uitleg mist, en één uitleg terugzetten. regie toetst de inhoud
+// zelf (beoordeelUitleg) en zet de bron; de kaart zelf verandert niet.
+export async function haalUitlegNodig() {
+  return verzoek('/api/werkplek/uitleg-nodig', 'GET');
+}
+
+export async function stuurUitleg(id, uitleg) {
+  const nummer = Number(id);
+  if (!Number.isInteger(nummer) || nummer < 1) throw new Error(`item-id moet een positief geheel getal zijn, kreeg "${id}".`);
+  return verzoek(`/api/werkplek/uitleg/${nummer}`, 'PUT', uitleg);
+}
+
 const HARTSLAG_VLAGGEN = ['uitkomst', 'omschrijving', 'soort'];
-const ITEM_VLAGGEN = ['type', 'titel', 'context', 'advies', 'adviesrol', 'opties', 'voorkeur', 'label', 'concept', 'geen-keuze', 'contextcheck'];
+const ITEM_VLAGGEN = ['type', 'titel', 'context', 'advies', 'adviesrol', 'opties', 'voorkeur', 'label', 'concept', 'geen-keuze', 'contextcheck', 'vervolg', 'geen-vervolg', 'actie-aldo', 'op'];
+
+// Kaart 1977: wat Aldo buiten regie moet doen voordat een kaart verder kan.
+// Zelfde lijst als de check-constraint in regie (src/actiealdoregels.ts).
+export const ACTIE_ALDO = ['sleutel', 'betaling', 'inlog', 'levering', 'handeling', 'derde'];
 const STAND_VLAGGEN = ['soort', 'sleutel', 'titel', 'stand', 'medewerker', 'toestand', 'waar'];
 const PENSIOEN_VLAGGEN = ['reden'];
 const SOORTEN = ['job', 'ritueel'];
@@ -489,6 +607,37 @@ async function cli() {
     }
     velden.geenKeuze = velden['geen-keuze'];
     delete velden['geen-keuze'];
+    // Vervolgcontext (kaart 1926): data voor de sessie die Aldo's antwoord uitvoert, geen instructie.
+    // Een keuzekaart zonder --vervolg en zonder bewuste --geen-vervolg is onvolledig: leeg betekent
+    // escaleren, niet uitvoeren, dus de sessie moet er hier over nadenken. Max 4000 tekens, geen geheimen
+    // (regie weigert dat zelf ook, src/vervolgregels.ts).
+    if (Array.isArray(velden.opties) && velden.opties.length > 0
+      && !(typeof velden.vervolg === 'string' && velden.vervolg.trim())
+      && !(typeof velden['geen-vervolg'] === 'string' && velden['geen-vervolg'].trim())) {
+      throw new Error('Een keuzekaart (--opties) heeft --vervolg "<wat een verse sessie nodig heeft om het antwoord uit te voeren, max 4000 tekens, geen geheimen>" nodig, of --geen-vervolg "<waarom er niets uit te voeren valt>".');
+    }
+    delete velden['geen-vervolg'];
+    if (velden['actie-aldo'] !== undefined) {
+      if (!ACTIE_ALDO.includes(velden['actie-aldo'])) {
+        throw new Error(`--actie-aldo moet een van ${ACTIE_ALDO.join(', ')} zijn, kreeg "${velden['actie-aldo']}".`);
+      }
+      velden.actieAldo = velden['actie-aldo'];
+    }
+    delete velden['actie-aldo'];
+    // Herinnering op datum: alleen de vorm hier, regie controleert of hij niet in het verleden
+    // ligt (400 met uitleg). Een oude kopie zonder deze vlag weigert --op hoorbaar (vlagparser).
+    if (velden.op !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(String(velden.op).trim())) {
+      throw new Error(`--op moet een datum JJJJ-MM-DD zijn, kreeg "${velden.op}".`);
+    }
+    if (velden.op !== undefined) velden.op = String(velden.op).trim();
+    // Een datum in het verleden al hier weigeren, in Amsterdamse tijd zoals regie rekent: anders
+    // gaat de 400 via de quarantaine en kan hij Aldo een storingskaart opleveren (review 09-10, punt 5).
+    if (velden.op !== undefined) {
+      const vandaag = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Amsterdam' }).format(new Date());
+      if (velden.op < vandaag) {
+        throw new Error(`--op ${velden.op} ligt in het verleden (vandaag is ${vandaag}). Stuur een gewone kaart dat de dag gemist is, met opties.`);
+      }
+    }
     // Vlagwaarden komen hier altijd binnen als tekst, dus "--concept true" gaf
     // de string "true" door aan een server die op de booleaanse waarde wachtte.
     // De vlag verdween daardoor geruisloos en het item werd alsnog bezorgd: op
@@ -516,6 +665,15 @@ async function cli() {
     if (velden.type && !TYPEN.includes(velden.type)) {
       throw new Error(`--type moet een van ${TYPEN.join(', ')} zijn, kreeg "${velden.type}".`);
     }
+    // Zelfde route als --type hierboven, en om dezelfde reden: advies is de
+    // andere verplichte kernvraag uit item-validatie.ts (server). Een sessie
+    // die --advies vergeet bij een handmatig item command hoort dat hier te
+    // horen, in plaats van dat de server het pas via quarantaine afvangt
+    // (regie-item 640 en 849, geweigerde invoer aan de deur: --advies ontbrak
+    // bij een handmatig samengesteld item command).
+    if (typeof velden.advies !== 'string' || velden.advies.trim().length === 0 || velden.advies.length > 2000) {
+      throw new Error('--advies is verplicht, maximaal 2000 tekens.');
+    }
     // Hier wél weigeren in plaats van waarschuwen: op deze route zit een sessie
     // aan de knoppen, en die kan de kaart meteen fatsoenlijk maken. Er gaat niets
     // verloren, want het item bestaat op dit moment nog niet.
@@ -528,6 +686,11 @@ async function cli() {
     }
     const resultaat = await stuurItem(velden);
     console.log(resultaat);
+    // Een regie zonder herinneringen kent op_datum niet en zet de kaart meteen
+    // klaar. Dat hoort de sessie te horen, anders denkt hij dat de datum bewaakt is.
+    if (velden.op !== undefined && resultaat?.id && resultaat.op_datum !== velden.op) {
+      console.error(`Let op: regie gaf op_datum niet terug. Deze versie kent herinneringen niet; kaart #${resultaat.id} komt meteen, niet op ${velden.op}.`);
+    }
     return;
   }
   if (commando === 'stand') {
@@ -567,6 +730,61 @@ async function cli() {
     console.log(resultaat);
     return;
   }
+  if (commando === 'niet-uitgevoerd') {
+    const [id, reden, ...teveel] = rest;
+    if (!id || id.startsWith('--') || !reden || teveel.length) {
+      console.error('Gebruik: node regie-melden.mjs niet-uitgevoerd <item-id> "<waarom niet uitgevoerd>"');
+      process.exit(1);
+    }
+    const resultaat = await stuurNietUitgevoerd(id, reden);
+    console.log(resultaat);
+    return;
+  }
+  if (commando === 'aanspreken') {
+    const [id, ...teveel] = rest;
+    if (!id || id.startsWith('--') || teveel.length) {
+      console.error('Gebruik: node regie-melden.mjs aanspreken <item-id>');
+      console.error('         (alleen voor een eigen item dat nog op klaar staat, nog niet voorgelegd)');
+      process.exit(1);
+    }
+    const resultaat = await stuurAanspreken(id);
+    console.log(resultaat);
+    return;
+  }
+  if (commando === 'herstel') {
+    const [id, ...overig] = rest;
+    const i = overig.indexOf('--json');
+    let herstel = null;
+    try { herstel = i >= 0 ? JSON.parse(overig[i + 1] ?? '') : null; } catch { herstel = null; }
+    if (!id || id.startsWith('--') || !herstel) {
+      console.error('Gebruik: node regie-melden.mjs herstel <item-id> --json \'{"uitkomst":"gelukt|deels|mislukt|vastgelopen","gedaan":"...","nog_te_doen":[],"voor_aldo":null}\'');
+      process.exit(1);
+    }
+    const resultaat = await stuurHerstel(id, herstel);
+    console.log(resultaat);
+    return;
+  }
+  if (commando === 'niet-uitgevoerd') {
+    const [id, reden, ...teveel] = rest;
+    if (!id || id.startsWith('--') || !reden || teveel.length) {
+      console.error('Gebruik: node regie-melden.mjs niet-uitgevoerd <item-id> "<waarom niet uitgevoerd>"');
+      process.exit(1);
+    }
+    const resultaat = await stuurNietUitgevoerd(id, reden);
+    console.log(resultaat);
+    return;
+  }
+  if (commando === 'aanspreken') {
+    const [id, ...teveel] = rest;
+    if (!id || id.startsWith('--') || teveel.length) {
+      console.error('Gebruik: node regie-melden.mjs aanspreken <item-id>');
+      console.error('         (alleen voor een eigen item dat nog op klaar staat, nog niet voorgelegd)');
+      process.exit(1);
+    }
+    const resultaat = await stuurAanspreken(id);
+    console.log(resultaat);
+    return;
+  }
   if (commando === 'status') {
     const [id, ...teveel] = rest;
     if (!id || id.startsWith('--') || teveel.length) {
@@ -577,13 +795,16 @@ async function cli() {
     console.log(item);
     return;
   }
-  console.error('Gebruik: node regie-melden.mjs item --type <type> --titel "..." --advies "..." --opties "a|b" --voorkeur 1 [--context ...] [--adviesrol ...] [--label nu] [--contextcheck ja|nee]');
+  console.error('Gebruik: node regie-melden.mjs item --type <type> --titel "..." --advies "..." --opties "a|b" --voorkeur 1 [--context ...] [--adviesrol ...] [--label nu] [--contextcheck ja|nee] [--actie-aldo sleutel|betaling|inlog|levering|handeling|derde] [--op JJJJ-MM-DD]');
   console.error('         (minimaal twee keuzes plus --voorkeur; alleen een melding zonder keuze: --geen-keuze "waarom niet")');
   console.error('     of: node regie-melden.mjs hartslag <job> [interval-minuten] [--uitkomst ...] [--omschrijving ...] [--soort job|ritueel]');
   console.error('     of: node regie-melden.mjs stand --soort project|dossier|taak --sleutel <sleutel> --titel "..." --stand "..." [--medewerker ...] [--toestand loopt|wacht|storing|klaar] [--waar ...]');
   console.error('     of: node regie-melden.mjs pensioen <job> --reden "..."');
   console.error('     of: node regie-melden.mjs aanvulling <item-id> "<wat er intussen al bekend of gebeurd is>"');
+  console.error('     of: node regie-melden.mjs aanspreken <item-id>');
+  console.error('     of: node regie-melden.mjs herstel <item-id> --json \'{"uitkomst":...,"gedaan":...,"nog_te_doen":[],"voor_aldo":null}\'');
   console.error('     of: node regie-melden.mjs status <item-id>');
+  console.error('     of: node regie-melden.mjs niet-uitgevoerd <item-id> "<waarom niet uitgevoerd>"');
   console.error('Een item op een volgende status zetten: node scripts/zet-status.mjs <item-id> <status> "<toelichting>"');
   process.exit(1);
 }
