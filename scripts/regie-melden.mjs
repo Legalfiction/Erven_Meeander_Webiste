@@ -356,7 +356,7 @@ export function metUitstelOptie(opties) {
 
 // type: vraag | actie | fout | onduidelijkheid | voorstel. advies is verplicht (A10).
 // contextcheck: standaard aan, zie het blok CONTEXTCHECK hierboven.
-export async function stuurItem({ type, titel, context, advies, adviesrol, opties, voorkeur, label, concept, geenKeuze, vervolg, op, contextcheck = true, actieAldo }) {
+export async function stuurItem({ type, titel, context, advies, adviesrol, opties, voorkeur, label, concept, geenKeuze, vervolg, op, contextcheck = true, actieAldo, doelproject }) {
   // Bewust een waarschuwing en geen fout op deze route. De automatische melders
   // (nachtjobs, hooks) roepen stuurItem rechtstreeks aan; gooien zou hun melding
   // laten verdampen, en een verdwenen storingsmelding is erger dan een kale kaart.
@@ -384,10 +384,12 @@ export async function stuurItem({ type, titel, context, advies, adviesrol, optie
       console.error(`contextcheck: overgeslagen, ${fout?.message ?? fout}`);
     }
   }
+  // doelproject (kaart 1794): alleen een sleutel op de witte lijst van regie mag een kaart aan
+  // een ander project hangen; voor alle andere sleutels weigert regie dit hoorbaar (400).
   // op: herinnering op datum (JJJJ-MM-DD, 9 oktober 2026). De kaart wacht in regie tot die
   // dag (in het weekend de vrijdag ervoor) en staat tot dan in de agenda op projecten.barkr.nl.
   // Storingskaarten (geenKeuze) hebben geen opties en blijven zonder uitstelknop.
-  return post('/api/items', { type, titel, context, advies, adviesrol, opties: geenKeuze ? opties : metUitstelOptie(opties), voorkeur, label, concept, vervolg, actie_aldo: actieAldo, op_datum: op });
+  return post('/api/items', { type, titel, context, advies, adviesrol, opties: geenKeuze ? opties : metUitstelOptie(opties), voorkeur, label, concept, vervolg, actie_aldo: actieAldo, op_datum: op, doelproject });
 }
 
 // Eén regel "Mogelijk al bekend" toevoegen aan een kaart die nog niet verstuurd
@@ -547,7 +549,7 @@ export async function stuurUitleg(id, uitleg) {
 }
 
 const HARTSLAG_VLAGGEN = ['uitkomst', 'omschrijving', 'soort'];
-const ITEM_VLAGGEN = ['type', 'titel', 'context', 'advies', 'adviesrol', 'opties', 'voorkeur', 'label', 'concept', 'geen-keuze', 'contextcheck', 'vervolg', 'geen-vervolg', 'actie-aldo', 'op'];
+const ITEM_VLAGGEN = ['type', 'titel', 'context', 'advies', 'adviesrol', 'opties', 'voorkeur', 'label', 'concept', 'geen-keuze', 'contextcheck', 'vervolg', 'geen-vervolg', 'actie-aldo', 'op', 'doelproject'];
 
 // Kaart 1977: wat Aldo buiten regie moet doen voordat een kaart verder kan.
 // Zelfde lijst als de check-constraint in regie (src/actiealdoregels.ts).
@@ -663,6 +665,10 @@ async function cli() {
       throw new Error(`--op moet een datum JJJJ-MM-DD zijn, kreeg "${velden.op}".`);
     }
     if (velden.op !== undefined) velden.op = String(velden.op).trim();
+    if (velden.doelproject !== undefined && !/^[a-z0-9][a-z0-9-]{0,63}$/.test(String(velden.doelproject).trim())) {
+      throw new Error(`--doelproject moet een projectnaam zijn (a-z, 0-9, streepjes), kreeg "${velden.doelproject}".`);
+    }
+    if (velden.doelproject !== undefined) velden.doelproject = String(velden.doelproject).trim();
     // Een datum in het verleden al hier weigeren, in Amsterdamse tijd zoals regie rekent: anders
     // gaat de 400 via de quarantaine en kan hij Aldo een storingskaart opleveren (review 09-10, punt 5).
     if (velden.op !== undefined) {
@@ -832,7 +838,7 @@ async function cli() {
     console.log(item);
     return;
   }
-  console.error('Gebruik: node regie-melden.mjs item --type <type> --titel "..." --advies "..." --opties "a|b" --voorkeur 1 [--context ...] [--adviesrol ...] [--label nu] [--contextcheck ja|nee] [--actie-aldo sleutel|betaling|inlog|levering|handeling|derde] [--op JJJJ-MM-DD]');
+  console.error('Gebruik: node regie-melden.mjs item --type <type> --titel "..." --advies "..." --opties "a|b" --voorkeur 1 [--context ...] [--adviesrol ...] [--label nu] [--contextcheck ja|nee] [--actie-aldo sleutel|betaling|inlog|levering|handeling|derde] [--op JJJJ-MM-DD] [--doelproject <project>]');
   console.error('         (minimaal twee keuzes plus --voorkeur; alleen een melding zonder keuze: --geen-keuze "waarom niet")');
   console.error('     of: node regie-melden.mjs hartslag <job> [interval-minuten] [--uitkomst ...] [--omschrijving ...] [--soort job|ritueel]');
   console.error('     of: node regie-melden.mjs stand --soort project|dossier|taak --sleutel <sleutel> --titel "..." --stand "..." [--medewerker ...] [--toestand loopt|wacht|storing|klaar] [--waar ...]');
