@@ -310,6 +310,38 @@ export function controleerKeuzes({ opties, voorkeur, geenKeuze }) {
   return null;
 }
 
+// KAARTLINT (fase 0 chatvenster, 17-10-2026). Kaart 2835 bevatte een commando waarin een filter
+// een lange parameternaam stil door `[weggelaten]` had vervangen; Aldo voerde het uit en het deed
+// niets. Een kaart met een gedeeltelijk of verminkt commando gaat dus niet de deur uit: de melder
+// weigert `[weggelaten]`, plaatshouders in een codeblok en een ongesloten codeblok. Geeft de
+// bezwaren terug (leeg = goed). stuurItem waarschuwt alleen (automatische melders mogen niet
+// verdampen), de CLI weigert.
+const LINT_PLAATSHOUDER = /<\s*(?:[Jj]ouw|[Hh]ier|[Ss]leutel|[Tt]oken|[Ww]achtwoord|[Gg]eheim|[Ww]aarde|[Ii]nvullen|[Nn]aam)[^>\n]{0,40}>|\bJOUW_[A-Z_]+|\bHIER_[A-Z_]+|\bx{4,}\b|\[\s*(?:[Ss]leutel|[Tt]oken|[Ww]achtwoord|[Gg]eheim|\.\.\.)\s*\]|^[ \t]*\.\.\.[ \t]*$/m;
+
+export function kaartlint({ titel, context, advies, opties, vervolg } = {}) {
+  const bezwaren = [];
+  const velden = { titel, context, advies, vervolg, ...Object.fromEntries((Array.isArray(opties) ? opties : []).map((o, i) => [`optie ${i + 1}`, o])) };
+  for (const [naam, waarde] of Object.entries(velden)) {
+    if (typeof waarde !== 'string' || !waarde) continue;
+    if (waarde.includes('[weggelaten]')) {
+      bezwaren.push(`${naam} bevat "[weggelaten]": een filter heeft er iets uit gehaald, dus het commando of de tekst is onvolledig. Zet de volledige tekst terug (zonder echte geheimen, verwijs naar een variabele zoals $env:NAAM).`);
+    }
+    const hekken = (waarde.match(/```/g) ?? []).length;
+    if (hekken % 2 === 1) {
+      bezwaren.push(`${naam} heeft een ongesloten codeblok (oneven aantal \`\`\`): het commando kan afgekapt zijn.`);
+      continue;
+    }
+    const blokken = [...waarde.matchAll(/```[^\n]*\n([\s\S]*?)```/g)].map((m) => m[1]);
+    for (const blok of blokken) {
+      if (LINT_PLAATSHOUDER.test(blok)) {
+        bezwaren.push(`${naam} bevat een plaatshouder in een codeblok (bijv. <jouw ...>, xxxx, JOUW_...): Aldo kan dit niet uitvoeren. Vul de echte waarde in of verwijs naar een variabele.`);
+        break;
+      }
+    }
+  }
+  return bezwaren;
+}
+
 // UITSTELOPTIE (Aldo, regie-item 308, 05-10-2026). Elke kaart met keuzes houdt als
 // laatste keuze "Uitstellen", zodat Aldo een punt kan laten rusten zonder iets te
 // beslissen. Zo werkte het eerder ook. Hij komt achteraan, dus `voorkeur` blijft
@@ -335,6 +367,7 @@ export async function stuurItem({ type, titel, context, advies, adviesrol, optie
   if (bezwaar) {
     console.warn(`let op, kaart zonder keuzes: ${bezwaar}`);
   }
+  for (const b of kaartlint({ titel, context, advies, opties, vervolg })) console.warn(`let op, kaartlint: ${b}`);
   if (contextcheck && CONTEXTCHECK_TYPEN.includes(type) && process.env.REGIE_CONTEXTCHECK !== 'uit') {
     // Alles op stderr, zodat stdout (de JSON van regie) schoon blijft voor wie
     // het script als commando aanroept. Nooit gooien: zie het blok hierboven.
@@ -683,6 +716,10 @@ async function cli() {
         `${bezwaar}\nVoorbeeld: --opties "Nu herstellen|Tot maandag laten staan" --voorkeur 1` +
           '\nIs er echt niets te kiezen: --geen-keuze "alleen ter kennisgeving, er valt niets te beslissen".',
       );
+    }
+    const lintBezwaren = kaartlint(velden);
+    if (lintBezwaren.length) {
+      throw new Error(`kaartlint weigert deze kaart:\n- ${lintBezwaren.join('\n- ')}`);
     }
     const resultaat = await stuurItem(velden);
     console.log(resultaat);
