@@ -515,8 +515,11 @@ export async function stuurHartslag(job, intervalMinuten = 60, { uitkomst, omsch
 // blijft het onderwerp op de statuspagina leeg en grijs, niet groen.
 // Herhaald aanroepen met dezelfde soort+sleutel werkt de bestaande regel bij;
 // dit is een prikbord, geen logboek, dus de vorige tekst gaat verloren.
-export async function stuurStand({ soort, sleutel, titel, stand, medewerker, toestand, waar }) {
-  return post('/api/stand', { soort, sleutel, titel, stand, medewerker, toestand, waar });
+export async function stuurStand({ soort, sleutel, titel, stand, medewerker, toestand, waar, groepen, groepenVersie }) {
+  // groepen/groepenVersie: optioneel en additief (R3). Alleen meegestuurd als gezet;
+  // een regie die ze nog niet opslaat negeert ze en leest de platte tekst.
+  const extra = groepen !== undefined ? { groepen, groepenVersie: groepenVersie ?? 1 } : {};
+  return post('/api/stand', { soort, sleutel, titel, stand, medewerker, toestand, waar, ...extra });
 }
 
 // Eén vulronde van het register in één aanroep (inrichtingsadvies §9,
@@ -560,7 +563,7 @@ const ITEM_VLAGGEN = ['type', 'titel', 'context', 'advies', 'adviesrol', 'opties
 
 // Kaart 1977: wat Aldo buiten regie moet doen voordat een kaart verder kan.
 // Zelfde lijst als de check-constraint in regie (src/actiealdoregels.ts).
-export const ACTIE_ALDO = ['sleutel', 'betaling', 'inlog', 'levering', 'handeling', 'derde'];
+export const ACTIE_ALDO = ['sleutel', 'betaling', 'inlog', 'levering', 'handeling', 'derde', 'samen'];
 const STAND_VLAGGEN = ['soort', 'sleutel', 'titel', 'stand', 'medewerker', 'toestand', 'waar'];
 const PENSIOEN_VLAGGEN = ['reden'];
 const SOORTEN = ['job', 'ritueel'];
