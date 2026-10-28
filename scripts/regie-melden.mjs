@@ -356,11 +356,12 @@ export function metUitstelOptie(opties) {
 
 // type: vraag | actie | fout | onduidelijkheid | voorstel. advies is verplicht (A10).
 // contextcheck: standaard aan, zie het blok CONTEXTCHECK hierboven.
-export async function stuurItem({ type, titel, context, advies, adviesrol, opties, voorkeur, label, concept, geenKeuze, vervolg, op, contextcheck = true, actieAldo, actieAldoReden, doelproject }) {
+export async function stuurItem({ type, titel, context, advies, adviesrol, opties, voorkeur, label, concept, geenKeuze, vervolg, op, contextcheck = true, actieAldo, actieAldoReden, uitvoerder, uitvoerderReden, doelproject }) {
   // De actiepoort (Aldo, 28-10-2026): regie neemt een actie alleen aan met een uitzondering en een reden. Hier alleen een
   // waarschuwing (de server beslist, en een melder die niet mag stranden krijgt van regie een duidelijke 422).
-  if (type === 'actie' && !(actieAldo && actieAldoReden)) {
-    console.warn('let op, actie zonder actieAldo en actieAldoReden: regie weigert dit zodra de actiepoort aan staat. Kan een sessie het zelf, doe het dan; anders kies een uitzondering uit ' + ACTIE_ALDO.join('/') + '.');
+  // Een actie zegt wie het doet: Aldo (uitzondering uit ACTIE_ALDO plus reden) of een sessie (uitvoerder 'sessie' plus reden).
+  if (type === 'actie' && !((actieAldo && actieAldoReden) || (uitvoerder === 'sessie' && uitvoerderReden))) {
+    console.warn('let op, actie zonder actieAldo en actieAldoReden (of uitvoerder sessie en uitvoerderReden): regie weigert dit zodra de actiepoort aan staat. Kan een sessie het zelf, doe het dan; anders kies een uitzondering uit ' + ACTIE_ALDO.join('/') + '.');
   }
   // Bewust een waarschuwing en geen fout op deze route. De automatische melders
   // (nachtjobs, hooks) roepen stuurItem rechtstreeks aan; gooien zou hun melding
@@ -394,7 +395,7 @@ export async function stuurItem({ type, titel, context, advies, adviesrol, optie
   // op: herinnering op datum (JJJJ-MM-DD, 9 oktober 2026). De kaart wacht in regie tot die
   // dag (in het weekend de vrijdag ervoor) en staat tot dan in de agenda op projecten.barkr.nl.
   // Storingskaarten (geenKeuze) hebben geen opties en blijven zonder uitstelknop.
-  return post('/api/items', { type, titel, context, advies, adviesrol, opties: geenKeuze ? opties : metUitstelOptie(opties), voorkeur, label, concept, vervolg, actie_aldo: actieAldo, actie_aldo_reden: actieAldoReden, op_datum: op, doelproject });
+  return post('/api/items', { type, titel, context, advies, adviesrol, opties: geenKeuze ? opties : metUitstelOptie(opties), voorkeur, label, concept, vervolg, actie_aldo: actieAldo, actie_aldo_reden: actieAldoReden, uitvoerder, uitvoerder_reden: uitvoerderReden, op_datum: op, doelproject });
 }
 
 // Eén regel "Mogelijk al bekend" toevoegen aan een kaart die nog niet verstuurd
@@ -559,7 +560,7 @@ export async function stuurUitleg(id, uitleg) {
 }
 
 const HARTSLAG_VLAGGEN = ['uitkomst', 'omschrijving', 'soort'];
-const ITEM_VLAGGEN = ['type', 'titel', 'context', 'advies', 'adviesrol', 'opties', 'voorkeur', 'label', 'concept', 'geen-keuze', 'contextcheck', 'vervolg', 'geen-vervolg', 'actie-aldo', 'actie-aldo-reden', 'op', 'doelproject'];
+const ITEM_VLAGGEN = ['type', 'titel', 'context', 'advies', 'adviesrol', 'opties', 'voorkeur', 'label', 'concept', 'geen-keuze', 'contextcheck', 'vervolg', 'geen-vervolg', 'actie-aldo', 'actie-aldo-reden', 'uitvoerder', 'uitvoerder-reden', 'op', 'doelproject'];
 
 // Kaart 1977: wat Aldo buiten regie moet doen voordat een kaart verder kan.
 // Zelfde lijst als de check-constraint in regie (src/actiealdoregels.ts).
@@ -672,8 +673,19 @@ async function cli() {
     if (velden['actie-aldo-reden'] !== undefined) velden.actieAldoReden = String(velden['actie-aldo-reden']).trim();
     delete velden['actie-aldo-reden'];
     // De actiepoort: een sessie die een actie stuurt moet de uitzondering en de reden hier al noemen (de server weigert anders met 422).
-    if (velden.type === 'actie' && !(velden.actieAldo && velden.actieAldoReden)) {
-      throw new Error(`Een actie (--type actie) vraagt --actie-aldo ${ACTIE_ALDO.join('|')} en --actie-aldo-reden "<waarom alleen Aldo dit kan>". Kan een sessie het zelf, doe het dan: Aldo krijgt alleen wat alleen hij kan (geld, inlog, sleutel, levering, een fysieke handeling of een bericht aan een derde).`);
+    if (velden['uitvoerder'] !== undefined) {
+      if (velden['uitvoerder'] !== 'sessie') throw new Error(`--uitvoerder moet sessie zijn (werk voor een sessie of project-eigenaar), kreeg "${velden['uitvoerder']}".`);
+      velden.uitvoerder = 'sessie';
+    }
+    if (velden['uitvoerder-reden'] !== undefined) velden.uitvoerderReden = String(velden['uitvoerder-reden']).trim();
+    delete velden['uitvoerder-reden'];
+    if (velden.type === 'actie') {
+      const voorAldo = velden.actieAldo && velden.actieAldoReden;
+      const voorSessie = velden.uitvoerder === 'sessie' && velden.uitvoerderReden;
+      if (voorAldo && velden.uitvoerder === 'sessie') throw new Error('--actie-aldo en --uitvoerder sessie sluiten elkaar uit: het is een stap voor Aldo of werk voor een sessie.');
+      if (!voorAldo && !voorSessie) {
+        throw new Error(`Een actie (--type actie) zegt wie het doet. Voor Aldo: --actie-aldo ${ACTIE_ALDO.join('|')} en --actie-aldo-reden "<waarom alleen Aldo dit kan>" (geld, inlog, sleutel, levering, een fysieke handeling of een bericht aan een derde). Voor een sessie of project-eigenaar: --uitvoerder sessie en --uitvoerder-reden "<welke sessie en waarom niet Aldo>". Kan een sessie het zelf, doe het dan.`);
+      }
     }
     // Herinnering op datum: alleen de vorm hier, regie controleert of hij niet in het verleden
     // ligt (400 met uitleg). Een oude kopie zonder deze vlag weigert --op hoorbaar (vlagparser).
@@ -854,7 +866,7 @@ async function cli() {
     console.log(item);
     return;
   }
-  console.error('Gebruik: node regie-melden.mjs item --type <type> --titel "..." --advies "..." --opties "a|b" --voorkeur 1 [--context ...] [--adviesrol ...] [--label nu] [--contextcheck ja|nee] [--actie-aldo sleutel|betaling|inlog|levering|handeling|derde --actie-aldo-reden "..." (verplicht bij --type actie)] [--op JJJJ-MM-DD] [--doelproject <project>]');
+  console.error('Gebruik: node regie-melden.mjs item --type <type> --titel "..." --advies "..." --opties "a|b" --voorkeur 1 [--context ...] [--adviesrol ...] [--label nu] [--contextcheck ja|nee] [--actie-aldo sleutel|betaling|inlog|levering|handeling|derde --actie-aldo-reden "..." | --uitvoerder sessie --uitvoerder-reden "..." (een van de twee is verplicht bij --type actie)] [--op JJJJ-MM-DD] [--doelproject <project>]');
   console.error('         (minimaal twee keuzes plus --voorkeur; alleen een melding zonder keuze: --geen-keuze "waarom niet")');
   console.error('     of: node regie-melden.mjs hartslag <job> [interval-minuten] [--uitkomst ...] [--omschrijving ...] [--soort job|ritueel]');
   console.error('     of: node regie-melden.mjs stand --soort project|dossier|taak --sleutel <sleutel> --titel "..." --stand "..." [--medewerker ...] [--toestand loopt|wacht|storing|klaar] [--waar ...]');
